@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String           @id @default(cuid())
+  name            String
+  email           String           @unique
+  password        String
+  role            String           @default("student") // "student" | "admin"
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  quizResults     QuizResult[]
+  recommendations Recommendation[]
+  videoWatched    VideoWatch[]
+}
+
+model Video {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  category    String       // medical, engineering, cs, business, arts
+  url         String
+  thumbnail   String?
+  duration    Int?         // in seconds
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  watches     VideoWatch[]
+}
+
+model VideoWatch {
+  id        String   @id @default(cuid())
+  userId    String
+  videoId   String
+  watchedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, videoId])
+}
+
+model QuizQuestion {
+  id            String @id @default(cuid())
+  question      String
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctAnswer String // 1, 2, 3, or 4
+  fieldTag      String // medical, engineering, cs, business, arts
+  weight        Int    @default(1)
+}
+
+model QuizResult {
+  id               String   @id @default(cuid())
+  userId           String
+  score            Int
+  totalQuestions   Int
+  answers          Json     // stored as JSON
+  recommendedField String
+  createdAt        DateTime @default(now())
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Recommendation {
+  id              String   @id @default(cuid())
+  userId          String
+  fields          Json     // array of {field, confidence, explanation}
+  quizResultId    String?
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Book {
+  id          String @id @default(cuid())
+  title       String
+  author      String
+  description String
+  field       String // the career field this book is relevant to
+  coverUrl    String?
+  buyUrl      String?
+}
