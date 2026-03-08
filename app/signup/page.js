@@ -92,7 +92,6 @@ export default function SignupPage() {
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
                             <div className="relative">
-                                <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                                 <input
                                     id="signup-name"
                                     type="text"
@@ -100,15 +99,16 @@ export default function SignupPage() {
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Ahmad Ali"
                                     required
-                                    className="input-field pl-10"
+                                    autoComplete="name"
+                                    className="input-field pr-10"
                                 />
+                                <User size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
                             </div>
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
                             <div className="relative">
-                                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                                 <input
                                     id="signup-email"
                                     type="email"
@@ -116,15 +116,16 @@ export default function SignupPage() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="student@example.com"
                                     required
-                                    className="input-field pl-10"
+                                    autoComplete="email"
+                                    className="input-field pr-10"
                                 />
+                                <Mail size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
                             </div>
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
                             <div className="relative">
-                                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                                 <input
                                     id="signup-password"
                                     type={showPass ? 'text' : 'password'}
@@ -133,7 +134,8 @@ export default function SignupPage() {
                                     placeholder="Min. 8 characters"
                                     required
                                     minLength={8}
-                                    className="input-field pl-10 pr-10"
+                                    autoComplete="new-password"
+                                    className="input-field pr-10"
                                 />
                                 <button
                                     type="button"

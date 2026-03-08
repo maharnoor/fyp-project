@@ -258,6 +258,8 @@ body {
   transition: all 0.3s ease;
   outline: none;
   font-family: var(--font-sans);
+  /* Prevent browser autofill icon from appearing inside field */
+  background-clip: padding-box;
 }
 
 .input-field:focus {
@@ -267,6 +269,28 @@ body {
 
 .input-field::placeholder {
   color: #4b5563;
+}
+
+/* Override browser autofill yellow/white background with dark theme */
+.input-field:-webkit-autofill,
+.input-field:-webkit-autofill:hover,
+.input-field:-webkit-autofill:focus,
+.input-field:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #111827 inset !important;
+  box-shadow: 0 0 0 1000px #111827 inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+  caret-color: #f8fafc;
+  border-color: #1f2937 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Hide the browser's credential/autofill icon that overlaps our custom icon */
+.input-field::-webkit-contacts-auto-fill-button,
+.input-field::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
 }
 
 /* Progress */

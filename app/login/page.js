@@ -74,7 +74,6 @@ export default function LoginPage() {
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
                             <div className="relative">
-                                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                                 <input
                                     id="login-email"
                                     type="email"
@@ -82,15 +81,16 @@ export default function LoginPage() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="student@example.com"
                                     required
-                                    className="input-field pl-10"
+                                    autoComplete="email"
+                                    className="input-field pr-10"
                                 />
+                                <Mail size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
                             </div>
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
                             <div className="relative">
-                                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                                 <input
                                     id="login-password"
                                     type={showPass ? 'text' : 'password'}
@@ -98,7 +98,8 @@ export default function LoginPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Enter your password"
                                     required
-                                    className="input-field pl-10 pr-10"
+                                    autoComplete="current-password"
+                                    className="input-field pr-10"
                                 />
                                 <button
                                     type="button"
