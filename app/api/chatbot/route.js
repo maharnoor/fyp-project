@@ -1,116 +1,110 @@
 import { NextResponse } from 'next/server'
 
-const CAREER_KNOWLEDGE = {
-    greetings: ['hi', 'hello', 'hey', 'salam', 'assalam', 'good morning', 'good evening'],
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
+const MODEL = 'arcee-ai/trinity-large-preview:free'
 
-    responses: {
-        greetings: "Assalam-o-Alaikum! 👋 I'm MindBot, your AI career guide. I can help you choose the right field after Matric or Intermediate. What would you like to know?",
+const SYSTEM_PROMPT = `You are MindBot, an AI career guidance assistant specifically for Pakistani students in Pakistan. You help students choose the right academic field after Matric or Intermediate.
 
-        matric: `**After Matric (Grade 10), you can pursue:**\n\n📚 **FSc Pre-Medical** → Medicine, Pharmacy, Dentistry\n📐 **FSc Pre-Engineering** → Engineering (Civil, Mechanical, Electrical)\n💻 **ICS (Computer Science)** → Software Engineering, IT\n📊 **ICOM (Commerce)** → Business, Accounting, Finance\n🎨 **FA (Fine Arts)** → Graphic Design, Media, Architecture\n\n*Which field interests you most? Type it to learn more!*`,
+Your role:
+- Guide students about career fields: Computer Science, Medical, Engineering, Business/Commerce, Arts & Design
+- Give advice relevant to Pakistan's education system (Matric, FSc, ICS, ICOM, FA, BSc, etc.)
+- Mention Pakistani universities like FAST, NUST, LUMS, UET, AIMC, AKU, IBA, COMSATS, etc.
+- Mention entry tests: MDCAT (medical), ECAT (engineering), NUST NET, FAST Entry Test, etc.
+- Give salary info in PKR for Pakistani market
+- Mention scholarships like HEC, Ehsaas, LUMS NOP, NUST scholarship
+- Be encouraging, supportive and concise
+- Reply in simple English (you can mix some Urdu words naturally like "yaar", "bilkul", "theek hai")
+- Keep responses short and helpful (2-4 paragraphs max)
+- Do NOT help with unrelated topics — redirect to career guidance
 
-        inter: `**After Intermediate (Grade 12), you can pursue:**\n\n🏥 **MBBS/BDS** → Doctor, Dentist (need FSc Pre-Medical)\n⚙️ **BE/BSc Engineering** → Admission via FSc Pre-Engineering\n💻 **BS Computer Science** → Tech industry, startups, AI\n📊 **BBA/MBA** → Business management, banking\n🎨 **BFA/BArch** → Design, architecture, fine arts\n\n*Need details about any specific program?*`,
+Always sign off helpful responses with a tip or next step the student can take.`
 
-        cs: `**Computer Science & Software Engineering:**\n\n✅ **Requirements:** FSc Pre-Engineering or ICS\n🎓 **Top Universities:** FAST, NUST, LUMS, UET Lahore\n💼 **Career Paths:** Software Developer, Data Scientist, AI Engineer, Web Developer\n💰 **Starting Salary:** PKR 80,000 – 150,000/month\n📈 **Growth:** Extremely HIGH — Pakistan's IT exports exceeded $2.6 billion!\n\n**Key Subjects:** Programming, Data Structures, Algorithms, Databases, AI/ML`,
+// Fallback rule-based responses (if API key not set or rate limited)
+function getFallbackResponse(message) {
+    const msg = message.toLowerCase()
 
-        medical: `**Medical & Healthcare:**\n\n✅ **Requirements:** FSc Pre-Medical (Biology, Chemistry, Physics)\n🎓 **Top Universities:** AIMC Lahore, KMU Peshawar, AKU Karachi\n💼 **Career Paths:** Doctor (MBBS), Surgeon, Dentist (BDS), Pharmacist (Pharm-D)\n💰 **Starting Salary:** PKR 100,000 – 500,000/month (specialists earn much more)\n⏱️ **Duration:** 5 years MBBS + 1 year house job\n\n**Entry Test:** MDCAT — Study Biology, Chemistry, Physics, English`,
+    if (msg.match(/hi|hello|salam|hey|assalam/))
+        return "Assalam-o-Alaikum! 👋 I'm MindBot, your AI career advisor. I can help you choose the right field after Matric or Intermediate. What's on your mind?"
 
-        engineering: `**Engineering Fields:**\n\n✅ **Requirements:** FSc Pre-Engineering (Math, Physics, Chemistry)\n🎓 **Top Universities:** UET, NUST, GIKI, NED\n💼 **Career Paths:**\n• Civil → Construction, Infrastructure\n• Mechanical → Manufacturing, Automotive\n• Electrical → Power, Electronics\n• Software → Tech Companies\n💰 **Starting Salary:** PKR 70,000 – 200,000/month\n\n**Entry Test:** ECAT/NTS guided by specific universities`,
+    if (msg.match(/matric|after matric|10th/))
+        return "After Matric, you have great options:\n\n• **FSc Pre-Medical** → Doctor/Dentist/Pharmacy\n• **FSc Pre-Engineering** → Engineering/CS\n• **ICS** → Computer Science/IT\n• **ICOM** → Business/Accounting\n• **FA** → Arts/Design/Law\n\nChoose based on your favourite subjects! Which subjects do you enjoy most?"
 
-        business: `**Business & Commerce:**\n\n✅ **Requirements:** ICOM or FSc (any group accepted by many universities)\n🎓 **Top Universities:** IBA Karachi, LUMS, CBM, UCP\n💼 **Career Paths:** Banker, Accountant, Marketing Manager, Entrepreneur\n💰 **Starting Salary:** PKR 50,000 – 150,000/month\n📈 **Tip:** ACCA + BBA combination is highly valued!\n\n**Key Skills:** Communication, Leadership, Financial Literacy`,
+    if (msg.match(/intermediate|fsc|after inter|12th/))
+        return "After Intermediate (FSc/FA/ICS), you can apply to universities! Key entry tests:\n\n• **MDCAT** → Medical colleges (MBBS/BDS)\n• **ECAT** → Engineering universities\n• **NUST NET / FAST Test** → Top CS/Engg universities\n• **IBA/LUMS** → Business programs\n\nHEC also offers merit-based scholarships. Which field interests you?"
 
-        arts: `**Arts, Design & Creative Fields:**\n\n✅ **Requirements:** FA (Fine Arts) or any intermediate\n🎓 **Top Institutions:** NCA Lahore, Indus Valley, BNU\n💼 **Career Paths:** Graphic Designer, Architect, Film Maker, UI/UX Designer\n💰 **Salary Range:** PKR 40,000 – 300,000+/month (freelancers earn in dollars!)\n🌍 **Freelance Opportunity:** Pakistan is among top freelancing countries!\n\n**Hot Skill:** UI/UX + Graphic Design = Very High Demand`,
+    if (msg.match(/computer|software|cs|coding|programming/))
+        return "💻 **Computer Science** is one of the hottest fields in Pakistan!\n\n**Requirements:** ICS or FSc Pre-Engineering\n**Top Universities:** FAST-NUCES, NUST, LUMS, COMSATS, UET\n**Salary:** PKR 80,000–500,000+/month\n**Entry Test:** FAST Entry Test, NUST NET\n\n**Tip:** Start learning Python or web development on YouTube while preparing for entry tests!"
 
-        salary: `**Career Salary Comparison (Entry Level in Pakistan):**\n\n| Field | Monthly Salary |\n|-------|---------------|\n| 💻 Software Engineering | PKR 80K–150K |\n| 🩺 Medicine (After House Job) | PKR 100K–300K |\n| ⚙️ Engineering | PKR 70K–150K |\n| 📊 Business/Finance | PKR 50K–120K |\n| 🎨 Design (Freelance) | PKR 50K–250K |\n\n*Salaries grow significantly with experience!*`,
+    if (msg.match(/medical|doctor|mbbs|dentist|pharmacy/))
+        return "🩺 **Medical** is a prestigious and rewarding field!\n\n**Requirements:** FSc Pre-Medical (Biology, Chemistry, Physics)\n**Entry Test:** MDCAT (taken in August/September each year)\n**Top Colleges:** AIMC, KEMU, AKU, Dow Medical, NUMS\n**Duration:** 5 years MBBS + 1 year house job\n**Salary:** PKR 100,000–1,000,000+/month (specialists)\n\n**Tip:** Start MDCAT preparation from 1st year FSc!"
 
-        universities: `**Top Universities in Pakistan:**\n\n🏆 **Overall Rankings:**\n1. NUST Islamabad\n2. LUMS Lahore\n3. QAU Islamabad\n4. UET Lahore\n5. IBA Karachi\n\n💻 **Best for CS:** FAST, NUST, LUMS, UET\n🩺 **Best for Medical:** AIMC, AKU, KMU, SZMC\n⚙️ **Best for Engineering:** UET, NUST, GIKI, NED\n📊 **Best for Business:** IBA, LUMS, CBM`,
+    if (msg.match(/engineer|civil|mechanical|electrical/))
+        return "⚙️ **Engineering** offers excellent career prospects!\n\n**Requirements:** FSc Pre-Engineering\n**Entry Test:** ECAT, NUST NET, UET Test\n**Top Universities:** UET Lahore, NUST, GIKI, NED, COMSATS\n**Salary:** PKR 70,000–400,000+/month\n\n**Tip:** Civil and Electrical Engineering have the most job opportunities in Pakistan right now!"
 
-        scholarship: `**Scholarship Opportunities:**\n\n🎓 **HEC Scholarships:** Need-based & merit-based for Pakistani students\n🏛️ **NUST Scholarship:** Based on SAT/entry test score\n💰 **Ehsaas Scholarship:** Government scholarship for deserving students\n🌍 **Chevening (UK):** Masters scholarships\n🇨🇳 **Chinese Government Scholarship:** Free tuition for top students\n\n*Apply early and maintain good grades!*`,
+    if (msg.match(/business|bba|mba|commerce|accounting|finance/))
+        return "📊 **Business** is great if you love strategy and leadership!\n\n**Requirements:** ICOM or any background\n**Top Universities:** IBA Karachi, LUMS, FAST, NUST Business School\n**Programs:** BBA (4 years), BCom (2-3 years)\n**Salary:** PKR 60,000–600,000+/month\n\n**Tip:** IBA and LUMS have National Talent Hunt programs with full scholarships!"
 
-        default: `I can help you with career guidance! 🎯\n\nTry asking me:\n• "Which field is good after matric?"\n• "Tell me about Computer Science"\n• "How to become a doctor?"\n• "Best universities in Pakistan"\n• "Salary comparison"\n• "Scholarships in Pakistan"\n\nOr take our **AI Quiz** for personalized recommendations! 📝`,
-    }
-}
+    if (msg.match(/arts|design|graphic|architecture|creative/))
+        return "🎨 **Arts & Design** is a growing field, especially for freelancing!\n\n**Programs:** BFA, BDes, B.Arch\n**Top Universities:** NCA Lahore, Indus Valley, BNU\n**Salary:** PKR 40,000–300,000+/month (freelancers earn in USD!)\n\n**Tip:** Learn Figma, Adobe Suite, or 3D tools on Fiverr/Upwork to start earning while studying!"
 
-function findResponse(message) {
-    const msg = message.toLowerCase().trim()
+    if (msg.match(/scholarship|funding|financial/))
+        return "💰 **Scholarships available in Pakistan:**\n\n• **HEC Scholarships** → hec.gov.pk\n• **Ehsaas Undergraduate** → For low-income students\n• **LUMS NOP** → Need-based full scholarship\n• **NUST** → Merit-based fee waivers\n• **IBA Karachi** → National Talent Hunt Program\n• **Aga Khan Foundation** → For exceptional students\n\n**Tip:** Apply to multiple scholarships simultaneously — deadlines are usually March-July!"
 
-    // Greetings
-    if (CAREER_KNOWLEDGE.greetings.some(g => msg.includes(g))) {
-        return CAREER_KNOWLEDGE.responses.greetings
-    }
+    if (msg.match(/salary|earn|money|income|pay/))
+        return "💰 **Salary ranges in Pakistan (2024):**\n\n• Software Engineer: PKR 80K–500K/month\n• Doctor (GP): PKR 100K–300K/month\n• Civil Engineer: PKR 60K–250K/month\n• Business Manager: PKR 70K–400K/month\n• Graphic Designer: PKR 40K–200K/month\n\n**Best earning potential:** CS/Software + Freelancing (earn in USD!)\n\n**Tip:** Skills + experience matter more than degree for high salaries!"
 
-    // Matric related
-    if (msg.includes('matric') || msg.includes('10th') || msg.includes('grade 10') || msg.includes('after matric')) {
-        return CAREER_KNOWLEDGE.responses.matric
-    }
-
-    // Intermediate related
-    if (msg.includes('inter') || msg.includes('intermediate') || msg.includes('fsc') || msg.includes('12th') || msg.includes('after inter')) {
-        return CAREER_KNOWLEDGE.responses.inter
-    }
-
-    // CS
-    if (msg.includes('computer') || msg.includes('software') || msg.includes('programming') || msg.includes('coding') || msg.includes('it field') || msg.includes('cs')) {
-        return CAREER_KNOWLEDGE.responses.cs
-    }
-
-    // Medical
-    if (msg.includes('medical') || msg.includes('doctor') || msg.includes('mbbs') || msg.includes('medicine') || msg.includes('pharmacy') || msg.includes('biology')) {
-        return CAREER_KNOWLEDGE.responses.medical
-    }
-
-    // Engineering
-    if (msg.includes('engineer') || msg.includes('civil') || msg.includes('mechanical') || msg.includes('electrical') || msg.includes('ecat')) {
-        return CAREER_KNOWLEDGE.responses.engineering
-    }
-
-    // Business
-    if (msg.includes('business') || msg.includes('commerce') || msg.includes('bba') || msg.includes('mba') || msg.includes('finance') || msg.includes('accounting')) {
-        return CAREER_KNOWLEDGE.responses.business
-    }
-
-    // Arts
-    if (msg.includes('arts') || msg.includes('design') || msg.includes('graphic') || msg.includes('creative') || msg.includes('architect') || msg.includes('fine arts')) {
-        return CAREER_KNOWLEDGE.responses.arts
-    }
-
-    // Salary
-    if (msg.includes('salary') || msg.includes('income') || msg.includes('earn') || msg.includes('payment') || msg.includes('money')) {
-        return CAREER_KNOWLEDGE.responses.salary
-    }
-
-    // Universities
-    if (msg.includes('university') || msg.includes('universities') || msg.includes('college') || msg.includes('admission') || msg.includes('institute')) {
-        return CAREER_KNOWLEDGE.responses.universities
-    }
-
-    // Scholarship
-    if (msg.includes('scholarship') || msg.includes('fund') || msg.includes('financial aid') || msg.includes('hec')) {
-        return CAREER_KNOWLEDGE.responses.scholarship
-    }
-
-    // Default
-    return CAREER_KNOWLEDGE.responses.default
+    return "I'm here to help with career guidance for Pakistani students! I can help with:\n\n• **Fields** after Matric or Intermediate\n• **University** recommendations & entry tests\n• **Scholarship** information\n• **Salary** expectations\n• **Subject** requirements\n\nWhat would you like to know? 🎯"
 }
 
 export async function POST(request) {
     try {
         const { message } = await request.json()
 
-        if (!message || typeof message !== 'string') {
+        if (!message?.trim()) {
             return NextResponse.json({ error: 'Message is required' }, { status: 400 })
         }
 
-        // Add small delay to simulate thinking
-        await new Promise(resolve => setTimeout(resolve, 500))
+        // If no API key, use fallback
+        if (!OPENROUTER_API_KEY) {
+            return NextResponse.json({ response: getFallbackResponse(message) })
+        }
 
-        const response = findResponse(message)
-
-        return NextResponse.json({
-            response,
-            timestamp: new Date().toISOString(),
+        // Call OpenRouter API
+        const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                'Content-Type': 'application/json',
+                'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+                'X-Title': 'MindField - AI Career Guidance',
+            },
+            body: JSON.stringify({
+                model: MODEL,
+                messages: [
+                    { role: 'system', content: SYSTEM_PROMPT },
+                    { role: 'user', content: message },
+                ],
+                max_tokens: 500,
+                temperature: 0.7,
+            }),
         })
+
+        if (!res.ok) {
+            // Fallback if API fails
+            console.error('OpenRouter API error:', res.status)
+            return NextResponse.json({ response: getFallbackResponse(message) })
+        }
+
+        const data = await res.json()
+        const response = data.choices?.[0]?.message?.content
+
+        if (!response) {
+            return NextResponse.json({ response: getFallbackResponse(message) })
+        }
+
+        return NextResponse.json({ response })
     } catch (error) {
         console.error('Chatbot error:', error)
-        return NextResponse.json({ error: 'Failed to process message' }, { status: 500 })
+        return NextResponse.json({ response: getFallbackResponse('help') })
     }
 }
