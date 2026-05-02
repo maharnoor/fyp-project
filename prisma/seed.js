@@ -151,7 +151,7 @@ const SAMPLE_VIDEOS = [
 ]
 
 async function main() {
-    console.log('🌱 Seeding MindField database...')
+    console.log('[seed] Seeding MindField database...')
 
     // Create admin user
     const adminPassword = await bcrypt.hash('admin123456', 12)
@@ -165,7 +165,7 @@ async function main() {
             role: 'admin',
         },
     })
-    console.log('✅ Admin user created:', admin.email)
+    console.log('[seed] Admin user created:', admin.email)
 
     // Create demo student
     const studentPassword = await bcrypt.hash('student123456', 12)
@@ -179,31 +179,31 @@ async function main() {
             role: 'student',
         },
     })
-    console.log('✅ Demo student created:', student.email)
+    console.log('[seed] Demo student created:', student.email)
 
     // Create quiz questions
     await prisma.quizQuestion.deleteMany()
     for (const q of QUIZ_QUESTIONS) {
         await prisma.quizQuestion.create({ data: q })
     }
-    console.log(`✅ ${QUIZ_QUESTIONS.length} quiz questions created`)
+    console.log(`[seed] ${QUIZ_QUESTIONS.length} quiz questions created`)
 
     // Create sample videos
     await prisma.video.deleteMany()
     for (const v of SAMPLE_VIDEOS) {
         await prisma.video.create({ data: v })
     }
-    console.log(`✅ ${SAMPLE_VIDEOS.length} sample videos created`)
+    console.log(`[seed] ${SAMPLE_VIDEOS.length} sample videos created`)
 
-    console.log('\n🎉 Database seeded successfully!')
-    console.log('\n📋 Demo Credentials:')
+    console.log('\n[seed] Database seeded successfully.')
+    console.log('\nDemo Credentials:')
     console.log('   Admin: admin@mindfield.pk / admin123456')
     console.log('   Student: demo@mindfield.pk / student123456')
 }
 
 main()
     .catch((e) => {
-        console.error('❌ Seed failed:', e)
+        console.error('[seed] FAILED:', e)
         process.exit(1)
     })
     .finally(async () => {

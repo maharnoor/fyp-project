@@ -6,7 +6,8 @@ import { useEffect } from 'react'
 import {
   Brain, Play, Star, ChevronRight, Sparkles,
   Users, BookOpen, MessageSquare, Trophy, ArrowRight,
-  CheckCircle, Zap, Target, Shield
+  CheckCircle, Zap, Target, Shield,
+  Code2, Stethoscope, Cog, Briefcase, Palette, Heart
 } from 'lucide-react'
 
 const FEATURES = [
@@ -49,11 +50,11 @@ const FEATURES = [
 ]
 
 const CAREER_FIELDS = [
-  { emoji: '💻', name: 'Computer Science', tag: 'High Demand', color: '#6366f1' },
-  { emoji: '🩺', name: 'Medical', tag: 'Prestigious', color: '#10b981' },
-  { emoji: '⚙️', name: 'Engineering', tag: 'In-Demand', color: '#f59e0b' },
-  { emoji: '📊', name: 'Business', tag: 'Versatile', color: '#8b5cf6' },
-  { emoji: '🎨', name: 'Arts & Design', tag: 'Creative', color: '#f43f5e' },
+  { icon: Code2, name: 'Computer Science', tag: 'High Demand', color: '#6366f1' },
+  { icon: Stethoscope, name: 'Medical', tag: 'Prestigious', color: '#10b981' },
+  { icon: Cog, name: 'Engineering', tag: 'In-Demand', color: '#f59e0b' },
+  { icon: Briefcase, name: 'Business', tag: 'Versatile', color: '#8b5cf6' },
+  { icon: Palette, name: 'Arts & Design', tag: 'Creative', color: '#f43f5e' },
 ]
 
 const STATS = [
@@ -165,18 +166,24 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <p className="text-center text-sm text-gray-500 uppercase tracking-wider mb-8 font-medium">Fields We Guide You Through</p>
           <div className="flex flex-wrap justify-center gap-4">
-            {CAREER_FIELDS.map((field, i) => (
-              <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-full glass"
-                style={{ border: `1px solid ${field.color}30` }}>
-                <span className="text-2xl">{field.emoji}</span>
-                <div>
-                  <p className="text-sm font-semibold text-white">{field.name}</p>
-                  <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: `${field.color}20`, color: field.color }}>
-                    {field.tag}
-                  </span>
+            {CAREER_FIELDS.map((field, i) => {
+              const Icon = field.icon
+              return (
+                <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-full glass"
+                  style={{ border: `1px solid ${field.color}30` }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{ background: `${field.color}15` }}>
+                    <Icon size={20} style={{ color: field.color }} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{field.name}</p>
+                    <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: `${field.color}20`, color: field.color }}>
+                      {field.tag}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -274,8 +281,10 @@ export default function LandingPage() {
           <Brain size={16} className="text-indigo-400" />
           <span className="font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>MindField</span>
         </div>
-        <p className="text-sm text-gray-500">
-          AI Career Guidance System for Pakistani Students — Built with ❤️ for a brighter future
+        <p className="text-sm text-gray-500 flex items-center justify-center gap-1.5 flex-wrap">
+          AI Career Guidance System for Pakistani Students — Built with
+          <Heart size={12} className="text-rose-400 inline-block" fill="#f43f5e" />
+          for a brighter future
         </p>
       </footer>
     </div>

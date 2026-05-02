@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
-import { Play, Eye, Clock, Filter, Search, CheckCircle } from 'lucide-react'
+import { Play, Eye, Clock, Filter, Search, CheckCircle, Target, Code2, Stethoscope, Cog, Briefcase, Palette, Film, Check, ArrowLeft } from 'lucide-react'
 import { LoadingSpinner } from '@/components/ui/Cards'
 
 const DEMO_VIDEOS = [
@@ -14,12 +14,12 @@ const DEMO_VIDEOS = [
 ]
 
 const CATEGORIES = [
-    { value: '', label: 'All Fields', icon: '🎯' },
-    { value: 'cs', label: 'Computer Science', icon: '💻' },
-    { value: 'medical', label: 'Medical', icon: '🩺' },
-    { value: 'engineering', label: 'Engineering', icon: '⚙️' },
-    { value: 'business', label: 'Business', icon: '📊' },
-    { value: 'arts', label: 'Arts & Design', icon: '🎨' },
+    { value: '', label: 'All Fields', icon: Target },
+    { value: 'cs', label: 'Computer Science', icon: Code2 },
+    { value: 'medical', label: 'Medical', icon: Stethoscope },
+    { value: 'engineering', label: 'Engineering', icon: Cog },
+    { value: 'business', label: 'Business', icon: Briefcase },
+    { value: 'arts', label: 'Arts & Design', icon: Palette },
 ]
 
 function formatDuration(seconds) {
@@ -92,7 +92,7 @@ export default function VideosPage() {
                         </span>
                     </div>
                     <button onClick={() => setActiveVideo(null)} className="btn-secondary mt-4" style={{ padding: '8px 16px', fontSize: '13px' }}>
-                        ← Back to Videos
+                        <ArrowLeft size={14} /> Back to Videos
                     </button>
                 </div>
             )}
@@ -111,20 +111,24 @@ export default function VideosPage() {
                     />
                 </div>
                 <div className="flex gap-2 overflow-x-auto pb-1">
-                    {CATEGORIES.map((cat) => (
-                        <button
-                            key={cat.value}
-                            onClick={() => setCategory(cat.value)}
-                            className="flex items-center gap-1.5 px-4 py-2 rounded-xl whitespace-nowrap text-sm font-medium transition-all"
-                            style={{
-                                background: category === cat.value ? 'rgba(139,92,246,0.2)' : 'rgba(255,255,255,0.04)',
-                                border: `1px solid ${category === cat.value ? 'rgba(139,92,246,0.4)' : 'rgba(255,255,255,0.08)'}`,
-                                color: category === cat.value ? '#c4b5fd' : '#6b7280',
-                            }}
-                        >
-                            <span>{cat.icon}</span> {cat.label}
-                        </button>
-                    ))}
+                    {CATEGORIES.map((cat) => {
+                        const CatIcon = cat.icon
+                        const isActive = category === cat.value
+                        return (
+                            <button
+                                key={cat.value}
+                                onClick={() => setCategory(cat.value)}
+                                className="flex items-center gap-1.5 px-4 py-2 rounded-xl whitespace-nowrap text-sm font-medium transition-all"
+                                style={{
+                                    background: isActive ? 'rgba(139,92,246,0.2)' : 'rgba(255,255,255,0.04)',
+                                    border: `1px solid ${isActive ? 'rgba(139,92,246,0.4)' : 'rgba(255,255,255,0.08)'}`,
+                                    color: isActive ? '#c4b5fd' : '#6b7280',
+                                }}
+                            >
+                                <CatIcon size={14} /> {cat.label}
+                            </button>
+                        )
+                    })}
                 </div>
             </div>
 
@@ -148,8 +152,8 @@ export default function VideosPage() {
                                     <Play size={36} style={{ color: catColor }} />
                                     {isWatched && (
                                         <div className="absolute top-2 right-2">
-                                            <span className="badge text-xs" style={{ background: 'rgba(16,185,129,0.8)', color: 'white', border: 'none' }}>
-                                                ✓ Watched
+                                            <span className="badge text-xs inline-flex items-center gap-1" style={{ background: 'rgba(16,185,129,0.8)', color: 'white', border: 'none' }}>
+                                                <Check size={10} strokeWidth={3} /> Watched
                                             </span>
                                         </div>
                                     )}
@@ -163,9 +167,15 @@ export default function VideosPage() {
 
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
-                                        <span className="badge text-xs" style={{ background: `${catColor}15`, color: catColor, border: `1px solid ${catColor}30` }}>
-                                            {CATEGORIES.find(c => c.value === video.category)?.icon} {CATEGORIES.find(c => c.value === video.category)?.label}
-                                        </span>
+                                        {(() => {
+                                            const cat = CATEGORIES.find(c => c.value === video.category)
+                                            const CatIcon = cat?.icon || Target
+                                            return (
+                                                <span className="badge text-xs inline-flex items-center gap-1" style={{ background: `${catColor}15`, color: catColor, border: `1px solid ${catColor}30` }}>
+                                                    <CatIcon size={11} /> {cat?.label}
+                                                </span>
+                                            )
+                                        })()}
                                     </div>
                                     <h3 className="font-bold text-white text-sm mb-1 line-clamp-2">{video.title}</h3>
                                     <p className="text-xs text-gray-500 line-clamp-2">{video.description}</p>
@@ -178,7 +188,9 @@ export default function VideosPage() {
 
             {filtered.length === 0 && (
                 <div className="text-center py-16">
-                    <p className="text-4xl mb-4">🎬</p>
+                    <div className="w-16 h-16 rounded-2xl bg-violet-500/10 mx-auto mb-4 flex items-center justify-center">
+                        <Film size={32} className="text-violet-400" />
+                    </div>
                     <h3 className="text-xl font-bold text-white mb-2">No Videos Found</h3>
                     <p className="text-gray-400">Try a different search or category filter</p>
                 </div>

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
-import { Brain, Mail, Lock, User, Eye, EyeOff, ArrowRight, CheckCircle } from 'lucide-react'
+import { Brain, Mail, Lock, User, Eye, EyeOff, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react'
 
 const PERKS = [
     'AI-powered career recommendations',
@@ -84,7 +84,7 @@ export default function SignupPage() {
                     {error && (
                         <div className="mb-4 p-3 rounded-xl text-sm text-red-400 flex items-center gap-2"
                             style={{ background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.2)' }}>
-                            <span>⚠️</span> {error}
+                            <AlertTriangle size={16} className="flex-shrink-0" /> {error}
                         </div>
                     )}
 

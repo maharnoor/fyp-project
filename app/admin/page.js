@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext'
 import { StatCard, LoadingSpinner } from '@/components/ui/Cards'
 import { Users, Video, Trophy, Brain, TrendingUp, Calendar } from 'lucide-react'
 import { CAREER_FIELDS } from '@/lib/recommendation'
+import FieldIcon, { getFieldColor } from '@/components/ui/FieldIcon'
 
 export default function AdminDashboard() {
     const { token } = useAuth()
@@ -59,9 +60,13 @@ export default function AdminDashboard() {
                             const fd = CAREER_FIELDS[item.recommendedField]
                             const total = fieldDistribution.reduce((a, b) => a + b._count.recommendedField, 0)
                             const pct = total > 0 ? Math.round((item._count.recommendedField / total) * 100) : 0
+                            const color = getFieldColor(item.recommendedField)
                             return (
                                 <div key={item.recommendedField} className="flex items-center gap-4">
-                                    <span className="text-xl w-8">{fd?.icon}</span>
+                                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                                        style={{ background: `${color}15`, border: `1px solid ${color}30` }}>
+                                        <FieldIcon field={item.recommendedField} size={16} useFieldColor />
+                                    </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between mb-1">
                                             <span className="text-sm font-medium text-gray-300">{fd?.name || item.recommendedField}</span>

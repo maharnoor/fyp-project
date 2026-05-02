@@ -1,6 +1,6 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Send, Bot, User, Sparkles, RotateCcw } from 'lucide-react'
+import { useState, useEffect, useRef, Fragment } from 'react'
+import { MessageSquare, Send, Bot, User, Sparkles, RotateCcw, Lightbulb, AlertCircle } from 'lucide-react'
 
 const SUGGESTED_QUESTIONS = [
     'Which field is good after matric?',
@@ -11,22 +11,52 @@ const SUGGESTED_QUESTIONS = [
     'How to become a doctor in Pakistan?',
 ]
 
-function MarkdownText({ text }) {
-    // Simple markdown parser
-    const formatted = text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/\n\n/g, '</p><p class="mt-2">')
-        .replace(/\n/g, '<br/>')
+// Safe markdown renderer — handles **bold** and *italic* without dangerouslySetInnerHTML.
+function renderInline(text, keyPrefix = '') {
+    const parts = []
+    const regex = /(\*\*[^*]+\*\*|\*[^*]+\*)/g
+    let lastIndex = 0
+    let match
+    let i = 0
+    while ((match = regex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+            parts.push(text.slice(lastIndex, match.index))
+        }
+        const token = match[0]
+        if (token.startsWith('**')) {
+            parts.push(<strong key={`${keyPrefix}b${i++}`}>{token.slice(2, -2)}</strong>)
+        } else {
+            parts.push(<em key={`${keyPrefix}i${i++}`}>{token.slice(1, -1)}</em>)
+        }
+        lastIndex = match.index + token.length
+    }
+    if (lastIndex < text.length) parts.push(text.slice(lastIndex))
+    return parts
+}
 
-    return <div dangerouslySetInnerHTML={{ __html: `<p>${formatted}</p>` }} />
+function MarkdownText({ text }) {
+    const paragraphs = text.split(/\n\n+/)
+    return (
+        <div>
+            {paragraphs.map((para, pi) => (
+                <p key={pi} className={pi > 0 ? 'mt-2' : ''}>
+                    {para.split('\n').map((line, li, arr) => (
+                        <Fragment key={li}>
+                            {renderInline(line, `${pi}-${li}-`)}
+                            {li < arr.length - 1 && <br />}
+                        </Fragment>
+                    ))}
+                </p>
+            ))}
+        </div>
+    )
 }
 
 export default function ChatbotPage() {
     const [messages, setMessages] = useState([
         {
             role: 'bot',
-            text: "Assalam-o-Alaikum! 👋 I'm **MindBot**, your AI career advisor for Pakistani students.\n\nI can help you with:\n• Career fields after Matric/Intermediate\n• University recommendations\n• Subject requirements\n• Salary information\n\nWhat career questions do you have?",
+            text: "Assalam-o-Alaikum! I'm **MindBot**, your AI career advisor for Pakistani students.\n\nI can help you with:\n• Career fields after Matric/Intermediate\n• University recommendations\n• Subject requirements\n• Salary information\n\nWhat career questions do you have?",
             time: new Date(),
         }
     ])
@@ -55,7 +85,7 @@ export default function ChatbotPage() {
             const data = await res.json()
             setMessages(prev => [...prev, { role: 'bot', text: data.response, time: new Date() }])
         } catch {
-            setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, I encountered an error. Please try again! 🙏', time: new Date() }])
+            setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, I encountered an error. Please try again.', time: new Date(), isError: true }])
         } finally {
             setLoading(false)
         }
@@ -71,7 +101,7 @@ export default function ChatbotPage() {
     const clearChat = () => {
         setMessages([{
             role: 'bot',
-            text: "Chat cleared! 🧹 How can I help you with your career guidance today?",
+            text: "Chat cleared. How can I help you with your career guidance today?",
             time: new Date(),
         }])
     }
@@ -110,6 +140,11 @@ export default function ChatbotPage() {
 
                         {/* Bubble */}
                         <div className={`max-w-[85%] ${msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-bot'}`}>
+                            {msg.isError && (
+                                <div className="flex items-center gap-1.5 mb-1 text-rose-300 text-xs font-medium">
+                                    <AlertCircle size={12} /> Error
+                                </div>
+                            )}
                             <MarkdownText text={msg.text} />
                             <p className="text-[10px] mt-2 opacity-50">
                                 {msg.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -137,7 +172,9 @@ export default function ChatbotPage() {
             {/* Suggested Questions */}
             {messages.length <= 2 && (
                 <div className="mb-3">
-                    <p className="text-xs text-gray-500 mb-2 font-medium">💡 Try asking:</p>
+                    <p className="text-xs text-gray-500 mb-2 font-medium flex items-center gap-1">
+                        <Lightbulb size={12} className="text-amber-400" /> Try asking:
+                    </p>
                     <div className="flex flex-wrap gap-2">
                         {SUGGESTED_QUESTIONS.slice(0, 4).map((q, i) => (
                             <button

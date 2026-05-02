@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
-import { Brain, Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles } from 'lucide-react'
+import { Brain, Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles, AlertTriangle, Lightbulb } from 'lucide-react'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -66,7 +66,7 @@ export default function LoginPage() {
                     {error && (
                         <div className="mb-4 p-3 rounded-xl text-sm text-red-400 flex items-center gap-2"
                             style={{ background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.2)' }}>
-                            <span>⚠️</span> {error}
+                            <AlertTriangle size={16} className="flex-shrink-0" /> {error}
                         </div>
                     )}
 
@@ -142,8 +142,11 @@ export default function LoginPage() {
                 {/* Demo credentials hint */}
                 <div className="mt-4 p-4 rounded-xl text-sm text-center"
                     style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)' }}>
-                    <p className="text-gray-400">
-                        <span className="text-indigo-400 font-semibold">💡 Tip:</span> Set up an admin account by
+                    <p className="text-gray-400 flex items-center justify-center gap-1.5 flex-wrap">
+                        <span className="text-indigo-400 font-semibold inline-flex items-center gap-1">
+                            <Lightbulb size={13} /> Tip:
+                        </span>
+                        Set up an admin account by
                         using <span className="font-mono text-indigo-400">admin@mindfield.pk</span>
                     </p>
                 </div>

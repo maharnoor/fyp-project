@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { Video, Plus, Trash2, Edit, X, Check } from 'lucide-react'
 import { LoadingSpinner } from '@/components/ui/Cards'
+import FieldIcon from '@/components/ui/FieldIcon'
 
 const DEMO_VIDEOS = [
     { id: 'v1', title: 'Introduction to Computer Science Careers', category: 'cs', url: 'https://www.youtube.com/embed/SzJ46YA_RaA', description: 'Explore the world of software engineering, AI, and data science careers in Pakistan.', duration: 480 },
@@ -11,7 +12,6 @@ const DEMO_VIDEOS = [
 ]
 
 const CATEGORIES = ['cs', 'medical', 'engineering', 'business', 'arts']
-const ICONS = { cs: '💻', medical: '🩺', engineering: '⚙️', business: '📊', arts: '🎨' }
 
 export default function AdminVideosPage() {
     const { token } = useAuth()
@@ -92,7 +92,7 @@ export default function AdminVideosPage() {
                             <div>
                                 <label className="block text-sm text-gray-300 mb-2">Category *</label>
                                 <select className="input-field" value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))}>
-                                    {CATEGORIES.map(c => <option key={c} value={c}>{ICONS[c]} {c.toUpperCase()}</option>)}
+                                    {CATEGORIES.map(c => <option key={c} value={c}>{c.toUpperCase()}</option>)}
                                 </select>
                             </div>
                         </div>
@@ -140,8 +140,8 @@ export default function AdminVideosPage() {
                                             <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{video.description}</p>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="badge text-xs" style={{ background: 'rgba(99,102,241,0.1)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.2)' }}>
-                                                {ICONS[video.category]} {video.category?.toUpperCase()}
+                                            <span className="badge text-xs inline-flex items-center gap-1" style={{ background: 'rgba(99,102,241,0.1)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.2)' }}>
+                                                <FieldIcon field={video.category} size={11} /> {video.category?.toUpperCase()}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">

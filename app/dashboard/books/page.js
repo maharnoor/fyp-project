@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { BOOK_RECOMMENDATIONS, CAREER_FIELDS } from '@/lib/recommendation'
-import { BookOpen, Star, ExternalLink, Filter } from 'lucide-react'
+import { BookOpen, Star, ExternalLink, Filter, Lightbulb } from 'lucide-react'
+import FieldIcon, { getFieldColor } from '@/components/ui/FieldIcon'
 
 const ALL_FIELDS = Object.keys(CAREER_FIELDS)
 
@@ -41,7 +42,7 @@ export default function BooksPage() {
                                 color: isActive ? '#fcd34d' : '#6b7280',
                             }}
                         >
-                            <span>{f.icon}</span> {f.name.split(' ')[0]}
+                            <FieldIcon field={field} size={14} /> {f.name.split(' ')[0]}
                         </button>
                     )
                 })}
@@ -50,7 +51,10 @@ export default function BooksPage() {
             {/* Active Field Info */}
             <div className="card" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.04))', border: '1px solid rgba(245,158,11,0.2)' }}>
                 <div className="flex items-center gap-4">
-                    <span className="text-5xl animate-float">{fd.icon}</span>
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 animate-float"
+                        style={{ background: `${getFieldColor(activeField)}20`, border: `1px solid ${getFieldColor(activeField)}40` }}>
+                        <FieldIcon field={activeField} size={32} useFieldColor />
+                    </div>
                     <div>
                         <h2 className="text-xl font-bold text-white">{fd.name}</h2>
                         <p className="text-gray-400 text-sm mt-1">{fd.description}</p>
@@ -110,10 +114,11 @@ export default function BooksPage() {
             {/* Tip */}
             <div className="p-5 rounded-2xl text-center"
                 style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.15)' }}>
-                <p className="text-sm text-gray-400">
-                    💡 <strong className="text-amber-400">Pro Tip:</strong> You can find most of these books online for free at
-                    <a href="https://zlibrary.to" target="_blank" rel="noopener" className="text-amber-400 hover:underline ml-1">Z-Library</a> or
-                    <a href="https://archive.org" target="_blank" rel="noopener" className="text-amber-400 hover:underline ml-1">Internet Archive</a>
+                <p className="text-sm text-gray-400 flex items-center justify-center gap-1.5 flex-wrap">
+                    <Lightbulb size={14} className="text-amber-400 flex-shrink-0" />
+                    <strong className="text-amber-400">Pro Tip:</strong> You can find most of these books online for free at
+                    <a href="https://zlibrary.to" target="_blank" rel="noopener" className="text-amber-400 hover:underline">Z-Library</a> or
+                    <a href="https://archive.org" target="_blank" rel="noopener" className="text-amber-400 hover:underline">Internet Archive</a>
                 </p>
             </div>
         </div>

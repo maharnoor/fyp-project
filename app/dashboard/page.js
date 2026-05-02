@@ -5,9 +5,10 @@ import { useAuth } from '@/context/AuthContext'
 import { StatCard, LoadingSpinner } from '@/components/ui/Cards'
 import {
     Play, Brain, Trophy, BookOpen, MessageSquare,
-    ChevronRight, Sparkles, Target, TrendingUp, Clock
+    ChevronRight, Sparkles, Target, TrendingUp, Clock, Hand, Check
 } from 'lucide-react'
 import { CAREER_FIELDS } from '@/lib/recommendation'
+import FieldIcon, { getFieldColor } from '@/components/ui/FieldIcon'
 
 export default function DashboardPage() {
     const { user, token } = useAuth()
@@ -52,8 +53,9 @@ export default function DashboardPage() {
             {/* Header */}
             <div className="flex items-start justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
-                        Welcome back, {user?.name?.split(' ')[0]}! 👋
+                    <h1 className="text-3xl font-bold text-white mb-1 flex items-center gap-2" style={{ fontFamily: 'var(--font-display)' }}>
+                        Welcome back, {user?.name?.split(' ')[0]}!
+                        <Hand size={26} className="text-amber-400" />
                     </h1>
                     <p className="text-gray-400">
                         {recentRec ? 'Your career journey is in progress.' : 'Start your career discovery journey today.'}
@@ -86,10 +88,14 @@ export default function DashboardPage() {
                         <div className="grid md:grid-cols-3 gap-4">
                             {topFields.slice(0, 3).map((rec, i) => {
                                 const fieldData = CAREER_FIELDS[rec.field]
+                                const color = getFieldColor(rec.field)
                                 return (
                                     <div key={i} className="glass rounded-xl p-4">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-2xl">{fieldData?.icon}</span>
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                                                style={{ background: `${color}15`, border: `1px solid ${color}30` }}>
+                                                <FieldIcon field={rec.field} size={20} useFieldColor />
+                                            </div>
                                             <div>
                                                 <p className="text-sm font-bold text-white">{fieldData?.name}</p>
                                                 <p className="text-xs text-indigo-400">{rec.confidence}% match</p>
@@ -167,7 +173,7 @@ export default function DashboardPage() {
                         <div key={i} className="flex items-center gap-3 p-3 rounded-xl"
                             style={{ background: item.done ? 'rgba(16,185,129,0.06)' : 'rgba(255,255,255,0.03)' }}>
                             <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${item.done ? 'bg-emerald-500' : 'border-2 border-gray-600'}`}>
-                                {item.done && <span className="text-white text-xs">✓</span>}
+                                {item.done && <Check size={12} className="text-white" strokeWidth={3} />}
                             </div>
                             <span className={`text-sm ${item.done ? 'text-gray-300 line-through' : 'text-gray-400'}`}>{item.label}</span>
                             {!item.done && item.href && (

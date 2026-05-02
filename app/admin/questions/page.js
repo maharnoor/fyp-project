@@ -5,11 +5,11 @@ import { HelpCircle, Plus, Trash2, X, Check } from 'lucide-react'
 import { LoadingSpinner } from '@/components/ui/Cards'
 
 const CATEGORIES = [
-    { value: 'cs', label: '💻 Computer Science' },
-    { value: 'medical', label: '🩺 Medical' },
-    { value: 'engineering', label: '⚙️ Engineering' },
-    { value: 'business', label: '📊 Business' },
-    { value: 'arts', label: '🎨 Arts' },
+    { value: 'cs', label: 'Computer Science' },
+    { value: 'medical', label: 'Medical' },
+    { value: 'engineering', label: 'Engineering' },
+    { value: 'business', label: 'Business' },
+    { value: 'arts', label: 'Arts' },
 ]
 
 const EMPTY_FORM = { question: '', option1: '', option2: '', option3: '', option4: '', correctAnswer: '1', fieldTag: 'cs', weight: 1 }

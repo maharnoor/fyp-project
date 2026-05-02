@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
-import { User, Mail, Calendar, Trophy, Play, Brain, Save, CheckCircle } from 'lucide-react'
+import { User, Mail, Calendar, Trophy, Play, Brain, Save, CheckCircle, Shield, GraduationCap } from 'lucide-react'
 import { LoadingSpinner } from '@/components/ui/Cards'
 
 export default function ProfilePage() {
@@ -68,8 +68,10 @@ export default function ProfilePage() {
                     <div>
                         <h2 className="text-2xl font-bold text-white">{profile?.name}</h2>
                         <p className="text-gray-400">{profile?.email}</p>
-                        <span className="badge mt-2" style={{ background: 'rgba(99,102,241,0.15)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}>
-                            {profile?.role === 'admin' ? '👑 Admin' : '🎓 Student'}
+                        <span className="badge mt-2 inline-flex items-center gap-1.5" style={{ background: 'rgba(99,102,241,0.15)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}>
+                            {profile?.role === 'admin'
+                                ? <><Shield size={12} /> Admin</>
+                                : <><GraduationCap size={12} /> Student</>}
                         </span>
                     </div>
                 </div>
