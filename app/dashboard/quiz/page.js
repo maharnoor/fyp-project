@@ -81,8 +81,38 @@ export default function QuizPage() {
     const [done, setDone] = useState(false)
     const [result, setResult] = useState(null)
 
-    const question = QUIZ_QUESTIONS[current]
-    const progress = ((current) / QUIZ_QUESTIONS.length) * 100
+    const [questions, setQuestions] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    // Fetch questions on mount
+    require('react').useEffect(() => {
+        if (!token) return;
+        fetch('/api/quiz/questions', {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(res => res.json())
+            .then(data => {
+                // Map the DB structure to frontend structure
+                const formatted = data.questions.map(q => ({
+                    id: q.id,
+                    question: q.question,
+                    options: [q.option1, q.option2, q.option3, q.option4],
+                }))
+                setQuestions(formatted)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.error('Failed to fetch questions:', err)
+                setLoading(false)
+            })
+    }, [token])
+
+    if (loading) {
+        return <div className="text-center py-12 text-gray-400">Loading quiz questions...</div>
+    }
+
+    const question = questions[current]
+    const progress = ((current) / questions.length) * 100
 
     const handleSelect = (optionIdx) => {
         setSelectedOption(optionIdx)
@@ -91,10 +121,10 @@ export default function QuizPage() {
     const handleNext = async () => {
         if (selectedOption === null) return
 
-        const newAnswers = [...answers, selectedOption]
+        const newAnswers = [...answers, { questionId: question.id, answer: selectedOption }]
         setAnswers(newAnswers)
 
-        if (current < QUIZ_QUESTIONS.length - 1) {
+        if (current < questions.length - 1) {
             setCurrent(current + 1)
             setSelectedOption(null)
         } else {
@@ -107,7 +137,7 @@ export default function QuizPage() {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify({ answers: newAnswers, totalQuestions: QUIZ_QUESTIONS.length }),
+                    body: JSON.stringify({ answers: newAnswers, totalQuestions: questions.length }),
                 })
                 const data = await res.json()
                 if (res.ok) {
@@ -199,14 +229,14 @@ export default function QuizPage() {
             {/* Progress */}
             <div>
                 <div className="flex justify-between text-sm text-gray-400 mb-2">
-                    <span>Question {current + 1} of {QUIZ_QUESTIONS.length}</span>
+                    <span>Question {current + 1} of {questions.length}</span>
                     <span>{Math.round(progress)}% complete</span>
                 </div>
                 <div className="progress-bar" style={{ height: '6px' }}>
                     <div className="progress-fill" style={{ width: `${progress}%` }} />
                 </div>
                 <div className="flex gap-1 mt-2">
-                    {QUIZ_QUESTIONS.map((_, i) => (
+                    {questions.map((_, i) => (
                         <div key={i} className="flex-1 h-1 rounded-full transition-all duration-300"
                             style={{
                                 background: i < current ? '#6366f1' : i === current ? '#8b5cf6' : '#1f2937'
@@ -257,7 +287,7 @@ export default function QuizPage() {
                             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                             Analyzing...
                         </span>
-                    ) : current === QUIZ_QUESTIONS.length - 1 ? (
+                    ) : current === questions.length - 1 ? (
                         <span className="flex items-center gap-2"><Brain size={18} /> Get My Recommendation</span>
                     ) : (
                         <span className="flex items-center gap-2">Next Question <ArrowRight size={18} /></span>
