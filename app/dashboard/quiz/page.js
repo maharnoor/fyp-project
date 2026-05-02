@@ -678,7 +678,7 @@ function shuffle(arr) {
     const a = [...arr]
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1))
-        ;[a[i], a[j]] = [a[j], a[i]]
+            ;[a[i], a[j]] = [a[j], a[i]]
     }
     return a
 }
@@ -875,8 +875,8 @@ export default function QuizPage() {
                             className={`quiz-option w-full text-left ${selectedOption === i ? 'selected' : ''}`}
                         >
                             <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${selectedOption === i
-                                    ? 'border-indigo-500 bg-indigo-500'
-                                    : 'border-gray-600'
+                                ? 'border-indigo-500 bg-indigo-500'
+                                : 'border-gray-600'
                                 }`}>
                                 {selectedOption === i
                                     ? <CheckCircle size={16} className="text-white" />

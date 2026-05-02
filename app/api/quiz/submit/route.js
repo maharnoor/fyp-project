@@ -14,8 +14,20 @@ export async function POST(request) {
         return NextResponse.json({ error: 'Answers array required' }, { status: 400 })
     }
 
+    // Fetch the questions for the submitted answers
+    const questionIds = answers.map(a => a.questionId)
+    const questions = await prisma.quizQuestion.findMany({
+        where: { id: { in: questionIds } }
+    })
+
+    // Map questions to answers
+    const answersWithQuestions = answers.map(a => ({
+        answer: a.answer,
+        question: questions.find(q => q.id === a.questionId)
+    }))
+
     // Calculate score and recommendations
-    const recommendations = calculateRecommendations(answers)
+    const recommendations = calculateRecommendations(answersWithQuestions)
     const topField = recommendations[0]?.field || 'cs'
 
     // Calculate a score (percentage)
