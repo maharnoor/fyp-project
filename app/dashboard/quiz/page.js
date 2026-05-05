@@ -92,6 +92,7 @@ const QUESTION_BANK = [
         options: ['VS Code / GitHub', 'Stethoscope / lab equipment', 'Excel / financial dashboards', 'Photoshop / Illustrator'],
         fieldTags: ['cs', 'medical', 'business', 'arts'],
     },
+
     {
         id: 'q15',
         question: 'Which YouTube channel are you most likely to subscribe to?',
