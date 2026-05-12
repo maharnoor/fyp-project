@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
-const MODEL = 'arcee-ai/trinity-large-preview:free'
+const NVIDIA_API_KEY = process.env.NVIDIA_API_KEY
+const MODEL = 'meta/llama-3.1-8b-instruct'
 
 const SYSTEM_PROMPT = `You are MindBot, an AI career guidance assistant specifically for Pakistani students in Pakistan. You help students choose the right academic field after Matric or Intermediate.
 
@@ -65,18 +65,16 @@ export async function POST(request) {
         }
 
         // If no API key, use fallback
-        if (!OPENROUTER_API_KEY) {
+        if (!NVIDIA_API_KEY) {
             return NextResponse.json({ response: getFallbackResponse(message) })
         }
 
-        // Call OpenRouter API
-        const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        // Call Nvidia NIM API
+        const res = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                'Authorization': `Bearer ${NVIDIA_API_KEY}`,
                 'Content-Type': 'application/json',
-                'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-                'X-Title': 'MindField - AI Career Guidance',
             },
             body: JSON.stringify({
                 model: MODEL,
@@ -91,7 +89,7 @@ export async function POST(request) {
 
         if (!res.ok) {
             // Fallback if API fails
-            console.error('OpenRouter API error:', res.status)
+            console.error('Nvidia API error:', res.status)
             return NextResponse.json({ response: getFallbackResponse(message) })
         }
 
