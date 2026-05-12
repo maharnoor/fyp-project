@@ -1,21 +1,46 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/context/AuthContext'
-import { Play, Eye, Clock, Filter, Search, CheckCircle, Target, Code2, Stethoscope, Cog, Briefcase, Palette, Film, Check, ArrowLeft } from 'lucide-react'
+import { Play, Eye, Clock, Filter, Search, CheckCircle, Target, Code2, Bot, Stethoscope, Cog, Briefcase, Palette, Film, Check, ArrowLeft } from 'lucide-react'
 import { LoadingSpinner } from '@/components/ui/Cards'
 
 const DEMO_VIDEOS = [
+    // CS & IT (3 videos)
     { id: 'v1', title: 'Introduction to Computer Science Careers', description: 'Explore the world of software engineering, AI, and data science careers in Pakistan.', category: 'cs', url: 'https://www.youtube.com/embed/SzJ46YA_RaA', thumbnail: null, duration: 480 },
-    { id: 'v2', title: 'How to Become a Doctor in Pakistan', description: 'Complete guide to MBBS admission: MDCAT, FSc requirements, and top medical colleges.', category: 'medical', url: 'https://www.youtube.com/embed/lK02m6dtrHQ', thumbnail: null, duration: 600 },
-    { id: 'v3', title: 'Engineering Career Paths in Pakistan', description: 'Civil, Mechanical, Electrical — discover which engineering field suits you.', category: 'engineering', url: 'https://www.youtube.com/embed/uk-cykGFly4', thumbnail: null, duration: 540 },
-    { id: 'v4', title: 'Business Administration: Is BBA Right for You?', description: 'Career options after BBA/MBA in Pakistan: banking, marketing, entrepreneurship.', category: 'business', url: 'https://www.youtube.com/embed/VkK3lhS1YVQ', thumbnail: null, duration: 420 },
-    { id: 'v5', title: 'Graphic Design & Creative Arts Careers', description: 'Freelancing, agencies, and creative careers — earning in dollars from Pakistan.', category: 'arts', url: 'https://www.youtube.com/embed/oBMtBkF27R4', thumbnail: null, duration: 360 },
-    { id: 'v6', title: 'Software Engineering at FAST NUCES', description: 'An honest review of CS at FAST — campus, curriculum, and job placement.', category: 'cs', url: 'https://www.youtube.com/embed/8mAITcNt710', thumbnail: null, duration: 720 },
+    { id: 'v2', title: 'Software Engineering at FAST NUCES', description: 'An honest review of CS at FAST — campus, curriculum, and job placement.', category: 'cs', url: 'https://www.youtube.com/embed/8mAITcNt710', thumbnail: null, duration: 720 },
+    { id: 'v3', title: 'How to learn coding in Pakistan', description: 'A beginner-friendly guide to learning programming and getting your first job.', category: 'cs', url: 'https://www.youtube.com/embed/zOjov-2OZ0E', thumbnail: null, duration: 540 },
+    
+    // AI (4 videos)
+    { id: 'v4', title: 'But what is a neural network?', description: 'A deep dive into how neural networks and deep learning work.', category: 'ai', url: 'https://www.youtube.com/embed/aircAruvnKk', thumbnail: null, duration: 1140 },
+    { id: 'v5', title: 'Machine Learning Basics', description: 'Understand the fundamentals of machine learning and how to get started.', category: 'ai', url: 'https://www.youtube.com/embed/ad79nYk2keg', thumbnail: null, duration: 600 },
+    { id: 'v6', title: 'AI for Everyone', description: 'An introduction to Artificial Intelligence for non-technical people.', category: 'ai', url: 'https://www.youtube.com/embed/JMUxmLyrhSk', thumbnail: null, duration: 900 },
+    { id: 'v7', title: 'CS50 AI Introduction', description: 'Harvard Universitys introduction to Artificial Intelligence with Python.', category: 'ai', url: 'https://www.youtube.com/embed/cKxRvEZd3Kg', thumbnail: null, duration: 3600 },
+
+    // Medical (3 videos)
+    { id: 'v8', title: 'Complete MDCAT Guide', description: 'How to prepare for MDCAT, syllabus, and study tips.', category: 'medical', url: 'https://www.youtube.com/embed/iyyYwcFxxFg', thumbnail: null, duration: 600 },
+    { id: 'v9', title: 'How to clear MDCAT', description: 'Tips and tricks to score high in MDCAT examination.', category: 'medical', url: 'https://www.youtube.com/embed/wJ7tlGol6qg', thumbnail: null, duration: 750 },
+    { id: 'v10', title: 'Life as a Medical Student', description: 'What to expect in your 5 years of MBBS in Pakistan.', category: 'medical', url: 'https://www.youtube.com/embed/cUIRwsRQ9jM', thumbnail: null, duration: 500 },
+
+    // Engineering (3 videos)
+    { id: 'v11', title: 'What is Mechanical Engineering?', description: 'Explore the field of mechanical engineering and its career prospects.', category: 'engineering', url: 'https://www.youtube.com/embed/NDa3AGPobS4', thumbnail: null, duration: 420 },
+    { id: 'v12', title: 'Civil vs Mechanical Engineering', description: 'Which engineering field is right for you in Pakistan?', category: 'engineering', url: 'https://www.youtube.com/embed/csqee7qLobk', thumbnail: null, duration: 660 },
+    { id: 'v13', title: 'Electrical Engineering Scope', description: 'Job opportunities and scope for electrical engineers.', category: 'engineering', url: 'https://www.youtube.com/embed/Xp5HivdDxhM', thumbnail: null, duration: 540 },
+
+    // Business (3 videos)
+    { id: 'v14', title: 'What is BBA Career?', description: 'Scope and job opportunities after BBA in Pakistan.', category: 'business', url: 'https://www.youtube.com/embed/zJwnlfptA2Q', thumbnail: null, duration: 360 },
+    { id: 'v15', title: 'BBA vs MBA', description: 'Should you do an MBA right after BBA? Detailed comparison.', category: 'business', url: 'https://www.youtube.com/embed/w29EwkFqB_4', thumbnail: null, duration: 480 },
+    { id: 'v16', title: 'Careers in Finance', description: 'Investment banking, corporate finance, and accounting paths.', category: 'business', url: 'https://www.youtube.com/embed/ejSjjT-tyPw', thumbnail: null, duration: 600 },
+
+    // Arts & Design (3 videos)
+    { id: 'v17', title: 'Graphic Design Career Guide', description: 'How to start a career in graphic design and freelance.', category: 'arts', url: 'https://www.youtube.com/embed/Hvkg9CoD3h4', thumbnail: null, duration: 540 },
+    { id: 'v18', title: 'UI/UX Design in Pakistan', description: 'Scope of UI/UX design and how to land your first job.', category: 'arts', url: 'https://www.youtube.com/embed/Lg4VZ0-2ZSE', thumbnail: null, duration: 420 },
+    { id: 'v19', title: 'Digital Art Basics', description: 'Getting started with digital art and illustration.', category: 'arts', url: 'https://www.youtube.com/embed/RtZA5wT84Dg', thumbnail: null, duration: 360 },
 ]
 
 const CATEGORIES = [
     { value: '', label: 'All Fields', icon: Target },
     { value: 'cs', label: 'Computer Science', icon: Code2 },
+    { value: 'ai', label: 'Artificial Intelligence', icon: Bot },
     { value: 'medical', label: 'Medical', icon: Stethoscope },
     { value: 'engineering', label: 'Engineering', icon: Cog },
     { value: 'business', label: 'Business', icon: Briefcase },
@@ -140,7 +165,7 @@ export default function VideosPage() {
                     {filtered.map((video) => {
                         const isWatched = watched.has(video.id)
                         const catColor = {
-                            cs: '#6366f1', medical: '#10b981', engineering: '#f59e0b',
+                            cs: '#6366f1', ai: '#ec4899', medical: '#10b981', engineering: '#f59e0b',
                             business: '#8b5cf6', arts: '#f43f5e'
                         }[video.category] || '#6366f1'
 
