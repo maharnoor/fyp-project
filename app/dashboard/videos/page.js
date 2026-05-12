@@ -14,7 +14,7 @@ const DEMO_VIDEOS = [
     { id: 'v4', title: 'But what is a neural network?', description: 'A deep dive into how neural networks and deep learning work.', category: 'ai', url: 'https://www.youtube.com/embed/aircAruvnKk', thumbnail: null, duration: 1140 },
     { id: 'v5', title: 'Machine Learning Basics', description: 'Understand the fundamentals of machine learning and how to get started.', category: 'ai', url: 'https://www.youtube.com/embed/ad79nYk2keg', thumbnail: null, duration: 600 },
     { id: 'v6', title: 'AI for Everyone', description: 'An introduction to Artificial Intelligence for non-technical people.', category: 'ai', url: 'https://www.youtube.com/embed/JMUxmLyrhSk', thumbnail: null, duration: 900 },
-    { id: 'v7', title: 'CS50 AI Introduction', description: 'Harvard Universitys introduction to Artificial Intelligence with Python.', category: 'ai', url: 'https://www.youtube.com/embed/cKxRvEZd3Kg', thumbnail: null, duration: 3600 },
+    { id: 'v7', title: 'CS50 AI Introduction', description: 'Harvard Universitys introduction to Artificial Intelligence with Python.', category: 'ai', url: 'https://www.youtube.com/embed/gR8QvFmNuLE', thumbnail: null, duration: 3600 },
 
     // Medical (3 videos)
     { id: 'v8', title: 'Complete MDCAT Guide', description: 'How to prepare for MDCAT, syllabus, and study tips.', category: 'medical', url: 'https://www.youtube.com/embed/iyyYwcFxxFg', thumbnail: null, duration: 600 },
