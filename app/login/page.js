@@ -46,13 +46,13 @@ export default function LoginPage() {
         <div className="min-h-screen flex items-center justify-center px-4 relative" style={{ background: '#0a0a0f' }}>
             {/* Background glow */}
             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full opacity-20 blur-3xl pointer-events-none"
-                style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
+                style={{ background: 'radial-gradient(circle, #FFFFFF, transparent)' }} />
 
             <div className="w-full max-w-md relative z-10">
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <Link href="/" className="inline-flex items-center gap-3 mb-6">
-                        <div className="w-12 h-12 rounded-2xl gradient-brand flex items-center justify-center animate-pulse-glow">
+                        <div className="w-12 h-12 rounded-2xl gradient-brand flex items-center justify-center ">
                             <Brain size={24} className="text-white" />
                         </div>
                         <span className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>MindField</span>
@@ -133,7 +133,7 @@ export default function LoginPage() {
 
                     <p className="text-center text-sm text-gray-400 mt-6">
                         Don&apos;t have an account?{' '}
-                        <Link href="/signup" className="text-indigo-400 font-semibold hover:text-indigo-300">
+                        <Link href="/signup" className="text-zinc-300 font-semibold hover:text-blue-300">
                             Sign up for free
                         </Link>
                     </p>
@@ -141,13 +141,13 @@ export default function LoginPage() {
 
                 {/* Demo credentials hint */}
                 <div className="mt-4 p-4 rounded-xl text-sm text-center"
-                    style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)' }}>
+                    style={{ background: 'rgba(255, 255, 255,0.06)', border: '1px solid rgba(255, 255, 255,0.15)' }}>
                     <p className="text-gray-400 flex items-center justify-center gap-1.5 flex-wrap">
-                        <span className="text-indigo-400 font-semibold inline-flex items-center gap-1">
+                        <span className="text-zinc-300 font-semibold inline-flex items-center gap-1">
                             <Lightbulb size={13} /> Tip:
                         </span>
                         Set up an admin account by
-                        using <span className="font-mono text-indigo-400">admin@mindfield.pk</span>
+                        using <span className="font-mono text-zinc-300">admin@mindfield.pk</span>
                     </p>
                 </div>
             </div>

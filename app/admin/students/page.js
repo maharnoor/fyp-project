@@ -78,7 +78,7 @@ export default function AdminStudentsPage() {
                                             {new Date(student.createdAt).toLocaleDateString()}
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="flex items-center gap-1 text-sm text-indigo-400">
+                                            <div className="flex items-center gap-1 text-sm text-zinc-300">
                                                 <Play size={13} /> {student._count?.videoWatched || 0}
                                             </div>
                                         </td>
@@ -88,7 +88,7 @@ export default function AdminStudentsPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="flex items-center gap-1 text-sm text-violet-400">
+                                            <div className="flex items-center gap-1 text-sm text-zinc-300">
                                                 <Brain size={13} /> {student._count?.recommendations || 0}
                                             </div>
                                         </td>

@@ -75,7 +75,7 @@ export default function AdminVideosPage() {
 
             {/* Add Video Form */}
             {showForm && (
-                <div className="card animate-scale-in" style={{ border: '1px solid rgba(99,102,241,0.3)' }}>
+                <div className="card animate-fade-in" style={{ border: '1px solid rgba(255, 255, 255,0.3)' }}>
                     <div className="flex justify-between items-center mb-5">
                         <h2 className="text-lg font-bold text-white">Add New Video</h2>
                         <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-white"><X size={20} /></button>
@@ -141,12 +141,12 @@ export default function AdminVideosPage() {
                                             <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{video.description}</p>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="badge text-xs inline-flex items-center gap-1" style={{ background: 'rgba(99,102,241,0.1)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.2)' }}>
+                                            <span className="badge text-xs inline-flex items-center gap-1" style={{ background: 'rgba(255, 255, 255,0.1)', color: '#D4D4D8', border: '1px solid rgba(255, 255, 255,0.2)' }}>
                                                 <FieldIcon field={video.category} size={11} /> {video.category?.toUpperCase()}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <a href={video.url} target="_blank" rel="noopener" className="text-xs text-indigo-400 hover:underline truncate block max-w-[200px]">
+                                            <a href={video.url} target="_blank" rel="noopener" className="text-xs text-zinc-300 hover:underline truncate block max-w-[200px]">
                                                 {video.url}
                                             </a>
                                         </td>

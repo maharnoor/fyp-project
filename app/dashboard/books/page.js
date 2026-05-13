@@ -51,7 +51,7 @@ export default function BooksPage() {
             {/* Active Field Info */}
             <div className="card" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.04))', border: '1px solid rgba(245,158,11,0.2)' }}>
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 animate-float"
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 "
                         style={{ background: `${getFieldColor(activeField)}20`, border: `1px solid ${getFieldColor(activeField)}40` }}>
                         <FieldIcon field={activeField} size={32} useFieldColor />
                     </div>
@@ -65,7 +65,7 @@ export default function BooksPage() {
             {/* Books Grid */}
             <div className="grid sm:grid-cols-2 gap-4">
                 {books.map((book, i) => (
-                    <div key={i} className="card glass-hover animate-fade-up" style={{ animationDelay: `${i * 0.1}s` }}>
+                    <div key={i} className="card hover:border-zinc-600 transition-colors animate-fade-up" style={{ animationDelay: `${i * 0.1}s` }}>
                         <div className="flex items-start gap-4">
                             {/* Book cover placeholder */}
                             <div className="w-16 h-20 rounded-lg flex items-center justify-center flex-shrink-0"

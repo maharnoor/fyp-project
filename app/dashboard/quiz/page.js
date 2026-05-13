@@ -770,9 +770,9 @@ export default function QuizPage() {
         const topField = topRec?.field
         const topColor = getFieldColor(topField)
         return (
-            <div className="max-w-2xl mx-auto space-y-6 animate-scale-in">
+            <div className="max-w-2xl mx-auto space-y-6 animate-fade-in">
                 <div className="text-center py-8">
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center animate-float"
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center "
                         style={{ background: `${topColor}20`, border: `1px solid ${topColor}40` }}>
                         <FieldIcon field={topField} size={40} useFieldColor />
                     </div>
@@ -788,8 +788,8 @@ export default function QuizPage() {
                         const color = getFieldColor(rec.field)
                         return (
                             <div key={i} className="card" style={{
-                                border: i === 0 ? '1px solid rgba(99,102,241,0.4)' : undefined,
-                                background: i === 0 ? 'rgba(99,102,241,0.08)' : undefined,
+                                border: i === 0 ? '1px solid rgba(255, 255, 255,0.4)' : undefined,
+                                background: i === 0 ? 'rgba(255, 255, 255,0.08)' : undefined,
                             }}>
                                 <div className="flex items-start gap-4">
                                     <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -799,7 +799,7 @@ export default function QuizPage() {
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-1">
                                             <h3 className="font-bold text-white">{fd?.name}</h3>
-                                            {i === 0 && <span className="badge inline-flex items-center gap-1" style={{ background: 'rgba(99,102,241,0.2)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}><Trophy size={10} /> Best Match</span>}
+                                            {i === 0 && <span className="badge inline-flex items-center gap-1" style={{ background: 'rgba(255, 255, 255,0.2)', color: '#D4D4D8', border: '1px solid rgba(255, 255, 255,0.3)' }}><Trophy size={10} /> Best Match</span>}
                                         </div>
                                         <p className="text-sm text-gray-400 mb-3">{rec.explanation}</p>
                                         <div className="progress-bar">
@@ -830,8 +830,8 @@ export default function QuizPage() {
             {/* Header */}
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <Target size={20} className="text-indigo-400" />
-                    <span className="text-sm font-medium text-indigo-400 uppercase tracking-wider">AI Career Quiz</span>
+                    <Target size={20} className="text-zinc-300" />
+                    <span className="text-sm font-medium text-zinc-300 uppercase tracking-wider">AI Career Quiz</span>
                 </div>
                 <h1 className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                     Discover Your Path
@@ -852,14 +852,14 @@ export default function QuizPage() {
                     {questions.map((_, i) => (
                         <div key={i} className="flex-1 h-1 rounded-full transition-all duration-300"
                             style={{
-                                background: i < current ? '#6366f1' : i === current ? '#8b5cf6' : '#1f2937'
+                                background: i < current ? '#FFFFFF' : i === current ? '#EDEDED' : '#1f2937'
                             }} />
                     ))}
                 </div>
             </div>
 
             {/* Question Card */}
-            <div className="card animate-scale-in" key={current}>
+            <div className="card animate-fade-in" key={current}>
                 <div className="flex items-center gap-2 mb-6">
                     <div className="w-8 h-8 rounded-lg gradient-brand flex items-center justify-center text-white font-bold text-sm">
                         {current + 1}
@@ -876,7 +876,7 @@ export default function QuizPage() {
                             className={`quiz-option w-full text-left ${selectedOption === i ? 'selected' : ''}`}
                         >
                             <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${selectedOption === i
-                                ? 'border-indigo-500 bg-indigo-500'
+                                ? 'border-zinc-700 bg-white text-black'
                                 : 'border-gray-600'
                                 }`}>
                                 {selectedOption === i

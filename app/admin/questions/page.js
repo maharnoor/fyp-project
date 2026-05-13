@@ -67,7 +67,7 @@ export default function AdminQuestionsPage() {
 
             {/* Add Form */}
             {showForm && (
-                <div className="card animate-scale-in" style={{ border: '1px solid rgba(99,102,241,0.3)' }}>
+                <div className="card animate-fade-in" style={{ border: '1px solid rgba(255, 255, 255,0.3)' }}>
                     <div className="flex justify-between items-center mb-5">
                         <h2 className="text-lg font-bold text-white">Add New Question</h2>
                         <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-white"><X size={20} /></button>
@@ -140,7 +140,7 @@ export default function AdminQuestionsPage() {
                                             ))}
                                         </div>
                                         <div className="flex items-center gap-3 mt-3">
-                                            <span className="badge text-xs" style={{ background: 'rgba(99,102,241,0.1)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.2)' }}>
+                                            <span className="badge text-xs" style={{ background: 'rgba(255, 255, 255,0.1)', color: '#D4D4D8', border: '1px solid rgba(255, 255, 255,0.2)' }}>
                                                 {q.fieldTag?.toUpperCase()}
                                             </span>
                                             <span className="text-xs text-gray-500">Weight: {q.weight}</span>
@@ -154,7 +154,7 @@ export default function AdminQuestionsPage() {
                         <div className="text-center py-16">
                             <HelpCircle size={40} className="text-gray-600 mx-auto mb-3" />
                             <p className="text-gray-500">No questions yet. Add your first quiz question!</p>
-                            <p className="text-gray-600 text-sm mt-2">Or run <code className="text-indigo-400">npm run db:seed</code> to load sample questions</p>
+                            <p className="text-gray-600 text-sm mt-2">Or run <code className="text-zinc-300">npm run db:seed</code> to load sample questions</p>
                         </div>
                     )}
                 </div>

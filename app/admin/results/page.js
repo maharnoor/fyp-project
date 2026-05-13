@@ -60,10 +60,10 @@ export default function AdminResultsPage() {
                                             <span className="text-sm font-bold text-amber-400">{user._count?.quizResults || 0}</span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="text-sm font-bold text-indigo-400">{user._count?.videoWatched || 0}</span>
+                                            <span className="text-sm font-bold text-zinc-300">{user._count?.videoWatched || 0}</span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="text-sm font-bold text-violet-400">{user._count?.recommendations || 0}</span>
+                                            <span className="text-sm font-bold text-zinc-300">{user._count?.recommendations || 0}</span>
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-400">
                                             {new Date(user.createdAt).toLocaleDateString()}

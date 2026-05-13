@@ -50,10 +50,10 @@ const FEATURES = [
 ]
 
 const CAREER_FIELDS = [
-  { icon: Code2, name: 'Computer Science', tag: 'High Demand', color: '#6366f1' },
+  { icon: Code2, name: 'Computer Science', tag: 'High Demand', color: '#FFFFFF' },
   { icon: Stethoscope, name: 'Medical', tag: 'Prestigious', color: '#10b981' },
   { icon: Cog, name: 'Engineering', tag: 'In-Demand', color: '#f59e0b' },
-  { icon: Briefcase, name: 'Business', tag: 'Versatile', color: '#8b5cf6' },
+  { icon: Briefcase, name: 'Business', tag: 'Versatile', color: '#EDEDED' },
   { icon: Palette, name: 'Arts & Design', tag: 'Creative', color: '#f43f5e' },
 ]
 
@@ -65,8 +65,8 @@ const STATS = [
 ]
 
 const colorMap = {
-  indigo: { bg: 'rgba(99,102,241,0.1)', border: 'rgba(99,102,241,0.2)', icon: '#6366f1' },
-  violet: { bg: 'rgba(139,92,246,0.1)', border: 'rgba(139,92,246,0.2)', icon: '#8b5cf6' },
+  indigo: { bg: 'rgba(255, 255, 255,0.1)', border: 'rgba(255, 255, 255,0.2)', icon: '#FFFFFF' },
+  violet: { bg: 'rgba(237, 237, 237,0.1)', border: 'rgba(237, 237, 237,0.2)', icon: '#EDEDED' },
   cyan: { bg: 'rgba(6,182,212,0.1)', border: 'rgba(6,182,212,0.2)', icon: '#06b6d4' },
   emerald: { bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.2)', icon: '#10b981' },
   amber: { bg: 'rgba(245,158,11,0.1)', border: 'rgba(245,158,11,0.2)', icon: '#f59e0b' },
@@ -86,7 +86,7 @@ export default function LandingPage() {
   return (
     <div style={{ background: '#0a0a0f', minHeight: '100vh' }}>
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a] border border-[#262626]" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl gradient-brand flex items-center justify-center">
@@ -109,17 +109,17 @@ export default function LandingPage() {
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
         {/* Background glows */}
         <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full opacity-20 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
+          style={{ background: 'radial-gradient(circle, #FFFFFF, transparent)' }} />
         <div className="absolute top-40 right-1/4 w-64 h-64 rounded-full opacity-15 blur-3xl"
-          style={{ background: 'radial-gradient(circle, #8b5cf6, transparent)' }} />
+          style={{ background: 'radial-gradient(circle, #EDEDED, transparent)' }} />
         <div className="absolute bottom-0 left-1/2 w-80 h-64 rounded-full opacity-10 blur-3xl"
           style={{ background: 'radial-gradient(circle, #06b6d4, transparent)' }} />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 animate-fade-up"
-            style={{ border: '1px solid rgba(99,102,241,0.3)' }}>
-            <Sparkles size={14} className="text-indigo-400" />
-            <span className="text-sm text-indigo-300 font-medium">AI-Powered Career Guidance for Pakistani Students</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0a0a0a] border border-[#262626] mb-8 animate-fade-up"
+            style={{ border: '1px solid rgba(255, 255, 255,0.3)' }}>
+            <Sparkles size={14} className="text-zinc-300" />
+            <span className="text-sm text-blue-300 font-medium">AI-Powered Career Guidance for Pakistani Students</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight animate-fade-up"
@@ -169,7 +169,7 @@ export default function LandingPage() {
             {CAREER_FIELDS.map((field, i) => {
               const Icon = field.icon
               return (
-                <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-full glass"
+                <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#0a0a0a] border border-[#262626]"
                   style={{ border: `1px solid ${field.color}30` }}>
                   <div className="w-10 h-10 rounded-full flex items-center justify-center"
                     style={{ background: `${field.color}15` }}>
@@ -206,7 +206,7 @@ export default function LandingPage() {
               const Icon = feature.icon
               const c = colorMap[feature.color]
               return (
-                <div key={i} className="card glass-hover animate-fade-up" style={{ animationDelay: `${0.1 * i}s` }}>
+                <div key={i} className="card hover:border-zinc-600 transition-colors animate-fade-up" style={{ animationDelay: `${0.1 * i}s` }}>
                   <div className="p-3 rounded-xl w-fit mb-4" style={{ background: c.bg, border: `1px solid ${c.border}` }}>
                     <Icon size={22} style={{ color: c.icon }} />
                   </div>
@@ -237,14 +237,14 @@ export default function LandingPage() {
             ].map((item, i) => {
               const Icon = item.icon
               return (
-                <div key={i} className="flex gap-6 items-start glass p-6 rounded-2xl" style={{ border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div key={i} className="flex gap-6 items-start bg-[#0a0a0a] border border-[#262626] p-6 rounded-2xl" style={{ border: '1px solid rgba(255,255,255,0.05)' }}>
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 rounded-xl gradient-brand flex items-center justify-center">
                       <Icon size={22} className="text-white" />
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-indigo-400 mb-1">STEP {item.step}</p>
+                    <p className="text-xs font-bold text-zinc-300 mb-1">STEP {item.step}</p>
                     <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
                     <p className="text-gray-400">{item.desc}</p>
                   </div>
@@ -258,10 +258,10 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="py-24 px-6 text-center">
         <div className="max-w-3xl mx-auto">
-          <div className="relative p-12 rounded-3xl overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.15))', border: '1px solid rgba(99,102,241,0.2)' }}>
+          <div className="relative p-12 rounded-3xl overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255,0.15), rgba(237, 237, 237,0.15))', border: '1px solid rgba(255, 255, 255,0.2)' }}>
             <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20 blur-3xl"
-              style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
-            <Sparkles size={40} className="text-indigo-400 mx-auto mb-6 animate-float" />
+              style={{ background: 'radial-gradient(circle, #FFFFFF, transparent)' }} />
+            <Sparkles size={40} className="text-zinc-300 mx-auto mb-6 " />
             <h2 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: 'var(--font-display)' }}>
               Ready to Find Your Path?
             </h2>
@@ -278,7 +278,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="py-8 px-6 text-center" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <Brain size={16} className="text-indigo-400" />
+          <Brain size={16} className="text-zinc-300" />
           <span className="font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>MindField</span>
         </div>
         <p className="text-sm text-gray-500 flex items-center justify-center gap-1.5 flex-wrap">

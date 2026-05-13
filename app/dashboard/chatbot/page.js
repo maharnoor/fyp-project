@@ -182,12 +182,12 @@ export default function ChatbotPage() {
                                 onClick={() => sendMessage(q)}
                                 className="text-xs px-3 py-1.5 rounded-full transition-all"
                                 style={{
-                                    background: 'rgba(99,102,241,0.1)',
-                                    border: '1px solid rgba(99,102,241,0.2)',
-                                    color: '#a5b4fc'
+                                    background: 'rgba(255, 255, 255,0.1)',
+                                    border: '1px solid rgba(255, 255, 255,0.2)',
+                                    color: '#D4D4D8'
                                 }}
-                                onMouseEnter={e => e.target.style.background = 'rgba(99,102,241,0.2)'}
-                                onMouseLeave={e => e.target.style.background = 'rgba(99,102,241,0.1)'}
+                                onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255,0.2)'}
+                                onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255,0.1)'}
                             >
                                 {q}
                             </button>

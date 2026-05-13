@@ -53,7 +53,7 @@ export default function SignupPage() {
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-12 relative" style={{ background: '#0a0a0f' }}>
             <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full opacity-15 blur-3xl pointer-events-none"
-                style={{ background: 'radial-gradient(circle, #8b5cf6, transparent)' }} />
+                style={{ background: 'radial-gradient(circle, #EDEDED, transparent)' }} />
 
             <div className="w-full max-w-lg relative z-10">
                 {/* Logo */}
@@ -72,8 +72,8 @@ export default function SignupPage() {
                 <div className="grid grid-cols-2 gap-2 mb-6">
                     {PERKS.map((perk, i) => (
                         <div key={i} className="flex items-start gap-2 p-3 rounded-xl"
-                            style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.1)' }}>
-                            <CheckCircle size={14} className="text-indigo-400 mt-0.5 flex-shrink-0" />
+                            style={{ background: 'rgba(255, 255, 255,0.06)', border: '1px solid rgba(255, 255, 255,0.1)' }}>
+                            <CheckCircle size={14} className="text-zinc-300 mt-0.5 flex-shrink-0" />
                             <span className="text-xs text-gray-300">{perk}</span>
                         </div>
                     ))}
@@ -176,7 +176,7 @@ export default function SignupPage() {
 
                     <p className="text-center text-sm text-gray-400 mt-6">
                         Already have an account?{' '}
-                        <Link href="/login" className="text-indigo-400 font-semibold hover:text-indigo-300">
+                        <Link href="/login" className="text-zinc-300 font-semibold hover:text-blue-300">
                             Sign in
                         </Link>
                     </p>

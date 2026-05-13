@@ -52,7 +52,7 @@ export default function Sidebar() {
                         <h1 className="text-lg font-bold text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
                             MindField
                         </h1>
-                        <p className="text-xs text-indigo-400 font-medium">
+                        <p className="text-xs text-zinc-300 font-medium">
                             {user?.role === 'admin' ? 'Admin Panel' : 'AI Career Guide'}
                         </p>
                     </div>
@@ -60,7 +60,7 @@ export default function Sidebar() {
             </div>
 
             {/* User Info */}
-            <div className="p-4 mx-3 mt-4 rounded-xl glass">
+            <div className="p-4 mx-3 mt-4 rounded-xl bg-[#0a0a0a] border border-[#262626]">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full gradient-brand flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                         {user?.name?.[0]?.toUpperCase() || 'U'}
@@ -84,9 +84,9 @@ export default function Sidebar() {
                             onClick={() => setMobileOpen(false)}
                             className={`sidebar-link ${isActive ? 'active' : ''}`}
                         >
-                            <Icon size={18} className={isActive ? 'text-indigo-400' : 'text-gray-500'} />
+                            <Icon size={18} className={isActive ? 'text-zinc-300' : 'text-gray-500'} />
                             <span>{item.label}</span>
-                            {isActive && <ChevronRight size={14} className="ml-auto text-indigo-400" />}
+                            {isActive && <ChevronRight size={14} className="ml-auto text-zinc-300" />}
                         </Link>
                     )
                 })}

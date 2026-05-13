@@ -53,8 +53,8 @@ export default function RecommendationsPage() {
             {/* Header */}
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <Sparkles size={20} className="text-indigo-400" />
-                    <span className="text-sm font-semibold text-indigo-400 uppercase tracking-wider">AI Analysis</span>
+                    <Sparkles size={20} className="text-zinc-300" />
+                    <span className="text-sm font-semibold text-zinc-300 uppercase tracking-wider">AI Analysis</span>
                 </div>
                 <h1 className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                     Your Career Recommendations
@@ -69,34 +69,34 @@ export default function RecommendationsPage() {
                 const color = getFieldColor(top.field)
                 return (
                     <div className="relative rounded-2xl overflow-hidden p-8"
-                        style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1))', border: '1px solid rgba(99,102,241,0.3)' }}>
+                        style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255,0.15), rgba(237, 237, 237,0.1))', border: '1px solid rgba(255, 255, 255,0.3)' }}>
                         <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20 blur-3xl"
-                            style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
+                            style={{ background: 'radial-gradient(circle, #FFFFFF, transparent)' }} />
                         <div className="relative z-10 flex items-start gap-6">
-                            <div className="w-20 h-20 rounded-2xl flex items-center justify-center flex-shrink-0 animate-float"
+                            <div className="w-20 h-20 rounded-2xl flex items-center justify-center flex-shrink-0 "
                                 style={{ background: `${color}20`, border: `1px solid ${color}40` }}>
                                 <FieldIcon field={top.field} size={40} useFieldColor />
                             </div>
                             <div className="flex-1">
-                                <span className="badge mb-3 inline-flex items-center gap-1.5" style={{ background: 'rgba(99,102,241,0.2)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}>
+                                <span className="badge mb-3 inline-flex items-center gap-1.5" style={{ background: 'rgba(255, 255, 255,0.2)', color: '#D4D4D8', border: '1px solid rgba(255, 255, 255,0.3)' }}>
                                     <Trophy size={12} /> Best Match — {top.confidence}% confidence
                                 </span>
                                 <h2 className="text-2xl font-bold text-white mb-2">{fd?.name}</h2>
                                 <p className="text-gray-300 leading-relaxed mb-4">{fd?.description}</p>
                                 <div className="grid sm:grid-cols-3 gap-3">
-                                    <div className="glass rounded-xl p-3">
+                                    <div className="bg-[#0a0a0a] border border-[#262626] rounded-xl p-3">
                                         <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
                                             <Wallet size={11} /> Salary Range
                                         </p>
                                         <p className="text-sm font-semibold text-white">{fd?.salary}</p>
                                     </div>
-                                    <div className="glass rounded-xl p-3">
+                                    <div className="bg-[#0a0a0a] border border-[#262626] rounded-xl p-3">
                                         <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
                                             <TrendingUp size={11} /> Job Growth
                                         </p>
                                         <p className="text-sm font-semibold text-white">{fd?.growth}</p>
                                     </div>
-                                    <div className="glass rounded-xl p-3">
+                                    <div className="bg-[#0a0a0a] border border-[#262626] rounded-xl p-3">
                                         <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
                                             <GraduationCap size={11} /> Key Subjects
                                         </p>
@@ -119,7 +119,7 @@ export default function RecommendationsPage() {
                         const color = getFieldColor(rec.field)
                         return (
                             <div key={i} className="card transition-all" style={{
-                                border: i === 0 ? '1px solid rgba(99,102,241,0.3)' : undefined
+                                border: i === 0 ? '1px solid rgba(255, 255, 255,0.3)' : undefined
                             }}>
                                 <button className="w-full flex items-center gap-4 text-left" onClick={() => setExpanded(isExpanded ? -1 : i)}>
                                     <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -131,9 +131,9 @@ export default function RecommendationsPage() {
                                             <div className="flex items-center gap-2">
                                                 <h3 className="font-bold text-white">{fd?.name}</h3>
                                                 {i === 0 && <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
-                                                    style={{ background: 'rgba(99,102,241,0.15)', color: '#a5b4fc' }}>Top Pick</span>}
+                                                    style={{ background: 'rgba(255, 255, 255,0.15)', color: '#D4D4D8' }}>Top Pick</span>}
                                             </div>
-                                            <span className="text-sm font-bold text-indigo-400">{rec.confidence}%</span>
+                                            <span className="text-sm font-bold text-zinc-300">{rec.confidence}%</span>
                                         </div>
                                         <div className="progress-bar">
                                             <div className="progress-fill" style={{ width: `${rec.confidence}%` }} />
@@ -150,7 +150,7 @@ export default function RecommendationsPage() {
                                                 <p className="text-xs text-gray-500 mb-2 font-semibold uppercase tracking-wider">Top Universities</p>
                                                 <div className="flex flex-wrap gap-2">
                                                     {fd?.universities?.map((u, j) => (
-                                                        <span key={j} className="badge" style={{ background: 'rgba(99,102,241,0.1)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.2)' }}>{u}</span>
+                                                        <span key={j} className="badge" style={{ background: 'rgba(255, 255, 255,0.1)', color: '#D4D4D8', border: '1px solid rgba(255, 255, 255,0.2)' }}>{u}</span>
                                                     ))}
                                                 </div>
                                             </div>

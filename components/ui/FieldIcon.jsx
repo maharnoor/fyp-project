@@ -3,15 +3,15 @@ import { Code2, Stethoscope, Cog, Briefcase, Palette, Target } from 'lucide-reac
 
 // Maps a career field key (cs/medical/engineering/business/arts) to a lucide icon.
 const FIELD_COLOR_MAP = {
-    cs: '#6366f1',
+    cs: '#FFFFFF',
     medical: '#10b981',
     engineering: '#f59e0b',
-    business: '#8b5cf6',
+    business: '#EDEDED',
     arts: '#f43f5e',
 }
 
 export function getFieldColor(field) {
-    return FIELD_COLOR_MAP[field] || '#6366f1'
+    return FIELD_COLOR_MAP[field] || '#FFFFFF'
 }
 
 // Returns the lucide component for a field — used by callers that want to embed

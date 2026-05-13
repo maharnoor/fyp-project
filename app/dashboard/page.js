@@ -77,20 +77,20 @@ export default function DashboardPage() {
             {/* Recommendation Banner */}
             {recentRec && topFields.length > 0 ? (
                 <div className="relative rounded-2xl overflow-hidden p-6"
-                    style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.15))', border: '1px solid rgba(99,102,241,0.2)' }}>
+                    style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255,0.15), rgba(237, 237, 237,0.15))', border: '1px solid rgba(255, 255, 255,0.2)' }}>
                     <div className="absolute top-0 right-0 w-48 h-48 rounded-full opacity-20 blur-3xl"
-                        style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
+                        style={{ background: 'radial-gradient(circle, #FFFFFF, transparent)' }} />
                     <div className="relative z-10">
                         <div className="flex items-center gap-2 mb-4">
-                            <Sparkles size={18} className="text-indigo-400" />
-                            <span className="text-sm font-semibold text-indigo-300">Your Latest AI Recommendation</span>
+                            <Sparkles size={18} className="text-zinc-300" />
+                            <span className="text-sm font-semibold text-blue-300">Your Latest AI Recommendation</span>
                         </div>
                         <div className="grid md:grid-cols-3 gap-4">
                             {topFields.slice(0, 3).map((rec, i) => {
                                 const fieldData = CAREER_FIELDS[rec.field]
                                 const color = getFieldColor(rec.field)
                                 return (
-                                    <div key={i} className="glass rounded-xl p-4">
+                                    <div key={i} className="bg-[#0a0a0a] border border-[#262626] rounded-xl p-4">
                                         <div className="flex items-center gap-3 mb-2">
                                             <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                                                 style={{ background: `${color}15`, border: `1px solid ${color}30` }}>
@@ -98,7 +98,7 @@ export default function DashboardPage() {
                                             </div>
                                             <div>
                                                 <p className="text-sm font-bold text-white">{fieldData?.name}</p>
-                                                <p className="text-xs text-indigo-400">{rec.confidence}% match</p>
+                                                <p className="text-xs text-zinc-300">{rec.confidence}% match</p>
                                             </div>
                                         </div>
                                         <div className="progress-bar">
@@ -116,8 +116,8 @@ export default function DashboardPage() {
                 </div>
             ) : (
                 <div className="relative rounded-2xl overflow-hidden p-8 text-center"
-                    style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1))', border: '1px solid rgba(99,102,241,0.15)' }}>
-                    <Brain size={48} className="text-indigo-400 mx-auto mb-4 animate-float" />
+                    style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255,0.1), rgba(237, 237, 237,0.1))', border: '1px solid rgba(255, 255, 255,0.15)' }}>
+                    <Brain size={48} className="text-zinc-300 mx-auto mb-4 " />
                     <h3 className="text-xl font-bold text-white mb-2">No Recommendation Yet</h3>
                     <p className="text-gray-400 mb-6">Take our AI quiz to get personalized career field recommendations based on your interests.</p>
                     <Link href="/dashboard/quiz" className="btn-primary">
@@ -138,14 +138,14 @@ export default function DashboardPage() {
                     ].map((item, i) => {
                         const Icon = item.icon
                         const colorMap = {
-                            indigo: { bg: 'rgba(99,102,241,0.1)', icon: '#6366f1' },
-                            violet: { bg: 'rgba(139,92,246,0.1)', icon: '#8b5cf6' },
+                            indigo: { bg: 'rgba(255, 255, 255,0.1)', icon: '#FFFFFF' },
+                            violet: { bg: 'rgba(237, 237, 237,0.1)', icon: '#EDEDED' },
                             cyan: { bg: 'rgba(6,182,212,0.1)', icon: '#06b6d4' },
                             emerald: { bg: 'rgba(16,185,129,0.1)', icon: '#10b981' },
                         }
                         const c = colorMap[item.color]
                         return (
-                            <Link key={i} href={item.href} className="card glass-hover">
+                            <Link key={i} href={item.href} className="card hover:border-zinc-600 transition-colors">
                                 <div className="p-2.5 rounded-xl w-fit mb-3" style={{ background: c.bg }}>
                                     <Icon size={20} style={{ color: c.icon }} />
                                 </div>
@@ -160,7 +160,7 @@ export default function DashboardPage() {
             {/* Getting Started Checklist */}
             <div className="card">
                 <h2 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                    <Clock size={18} className="text-indigo-400" /> Your Progress Checklist
+                    <Clock size={18} className="text-zinc-300" /> Your Progress Checklist
                 </h2>
                 <div className="space-y-3">
                     {[
@@ -177,7 +177,7 @@ export default function DashboardPage() {
                             </div>
                             <span className={`text-sm ${item.done ? 'text-gray-300 line-through' : 'text-gray-400'}`}>{item.label}</span>
                             {!item.done && item.href && (
-                                <Link href={item.href} className="ml-auto text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-medium">
+                                <Link href={item.href} className="ml-auto text-xs text-zinc-300 hover:text-blue-300 flex items-center gap-1 font-medium">
                                     Start <ChevronRight size={12} />
                                 </Link>
                             )}

@@ -53,7 +53,7 @@ export default function AdminDashboard() {
             {fieldDistribution && fieldDistribution.length > 0 && (
                 <div className="card">
                     <h2 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                        <TrendingUp size={18} className="text-indigo-400" /> Recommended Fields Distribution
+                        <TrendingUp size={18} className="text-zinc-300" /> Recommended Fields Distribution
                     </h2>
                     <div className="space-y-4">
                         {fieldDistribution.map((item) => {
@@ -76,7 +76,7 @@ export default function AdminDashboard() {
                                             <div className="progress-fill" style={{ width: `${pct}%` }} />
                                         </div>
                                     </div>
-                                    <span className="text-sm font-bold text-indigo-400 w-10 text-right">{pct}%</span>
+                                    <span className="text-sm font-bold text-zinc-300 w-10 text-right">{pct}%</span>
                                 </div>
                             )
                         })}
@@ -87,7 +87,7 @@ export default function AdminDashboard() {
             {/* Recent Students */}
             <div className="card">
                 <h2 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                    <Calendar size={18} className="text-indigo-400" /> Recent Students
+                    <Calendar size={18} className="text-zinc-300" /> Recent Students
                 </h2>
                 {recentStudents?.length > 0 ? (
                     <div className="divide-y divide-white/5">

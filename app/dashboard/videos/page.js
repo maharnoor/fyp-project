@@ -88,8 +88,8 @@ export default function VideosPage() {
             {/* Header */}
             <div>
                 <div className="flex items-center gap-2 mb-2">
-                    <Play size={20} className="text-violet-400" />
-                    <span className="text-sm font-semibold text-violet-400 uppercase tracking-wider">Learning Hub</span>
+                    <Play size={20} className="text-zinc-300" />
+                    <span className="text-sm font-semibold text-zinc-300 uppercase tracking-wider">Learning Hub</span>
                 </div>
                 <h1 className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
                     Career Guidance Videos
@@ -99,7 +99,7 @@ export default function VideosPage() {
 
             {/* Active Video Player */}
             {activeVideo && (
-                <div className="card animate-scale-in" style={{ border: '1px solid rgba(139,92,246,0.3)' }}>
+                <div className="card animate-fade-in" style={{ border: '1px solid rgba(237, 237, 237,0.3)' }}>
                     <div className="aspect-video rounded-xl overflow-hidden mb-4">
                         <iframe
                             src={activeVideo.url}
@@ -147,8 +147,8 @@ export default function VideosPage() {
                                 onClick={() => setCategory(cat.value)}
                                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl whitespace-nowrap text-sm font-medium transition-all"
                                 style={{
-                                    background: isActive ? 'rgba(139,92,246,0.2)' : 'rgba(255,255,255,0.04)',
-                                    border: `1px solid ${isActive ? 'rgba(139,92,246,0.4)' : 'rgba(255,255,255,0.08)'}`,
+                                    background: isActive ? 'rgba(237, 237, 237,0.2)' : 'rgba(255,255,255,0.04)',
+                                    border: `1px solid ${isActive ? 'rgba(237, 237, 237,0.4)' : 'rgba(255,255,255,0.08)'}`,
                                     color: isActive ? '#c4b5fd' : '#6b7280',
                                 }}
                             >
@@ -167,12 +167,12 @@ export default function VideosPage() {
                     {filtered.map((video) => {
                         const isWatched = watched.has(video.id)
                         const catColor = {
-                            cs: '#6366f1', ai: '#ec4899', medical: '#10b981', engineering: '#f59e0b',
-                            business: '#8b5cf6', arts: '#f43f5e'
-                        }[video.category] || '#6366f1'
+                            cs: '#FFFFFF', ai: '#ec4899', medical: '#10b981', engineering: '#f59e0b',
+                            business: '#EDEDED', arts: '#f43f5e'
+                        }[video.category] || '#FFFFFF'
 
                         return (
-                            <div key={video.id} className="card glass-hover cursor-pointer" onClick={() => handleWatch(video)}>
+                            <div key={video.id} className="card hover:border-zinc-600 transition-colors cursor-pointer" onClick={() => handleWatch(video)}>
                                 {/* Thumbnail placeholder */}
                                 <div className="aspect-video rounded-xl mb-4 flex items-center justify-center relative overflow-hidden"
                                     style={{ background: `linear-gradient(135deg, ${catColor}20, ${catColor}10)`, border: `1px solid ${catColor}30` }}>
@@ -219,8 +219,8 @@ export default function VideosPage() {
 
             {filtered.length === 0 && (
                 <div className="text-center py-16">
-                    <div className="w-16 h-16 rounded-2xl bg-violet-500/10 mx-auto mb-4 flex items-center justify-center">
-                        <Film size={32} className="text-violet-400" />
+                    <div className="w-16 h-16 rounded-2xl bg-zinc-800/50 mx-auto mb-4 flex items-center justify-center">
+                        <Film size={32} className="text-zinc-300" />
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">No Videos Found</h3>
                     <p className="text-gray-400">Try a different search or category filter</p>

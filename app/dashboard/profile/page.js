@@ -60,7 +60,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Avatar + Stats */}
-            <div className="card" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1))', border: '1px solid rgba(99,102,241,0.2)' }}>
+            <div className="card" style={{ background: 'linear-gradient(135deg, rgba(255, 255, 255,0.1), rgba(237, 237, 237,0.1))', border: '1px solid rgba(255, 255, 255,0.2)' }}>
                 <div className="flex items-center gap-6">
                     <div className="w-20 h-20 rounded-2xl gradient-brand flex items-center justify-center text-white text-3xl font-bold">
                         {profile?.name?.[0]?.toUpperCase()}
@@ -68,7 +68,7 @@ export default function ProfilePage() {
                     <div>
                         <h2 className="text-2xl font-bold text-white">{profile?.name}</h2>
                         <p className="text-gray-400">{profile?.email}</p>
-                        <span className="badge mt-2 inline-flex items-center gap-1.5" style={{ background: 'rgba(99,102,241,0.15)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}>
+                        <span className="badge mt-2 inline-flex items-center gap-1.5" style={{ background: 'rgba(255, 255, 255,0.15)', color: '#D4D4D8', border: '1px solid rgba(255, 255, 255,0.3)' }}>
                             {profile?.role === 'admin'
                                 ? <><Shield size={12} /> Admin</>
                                 : <><GraduationCap size={12} /> Student</>}
@@ -79,9 +79,9 @@ export default function ProfilePage() {
                 {profile?._count && (
                     <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/5">
                         {[
-                            { icon: Play, label: 'Videos Watched', value: profile._count.videoWatched, color: '#6366f1' },
+                            { icon: Play, label: 'Videos Watched', value: profile._count.videoWatched, color: '#FFFFFF' },
                             { icon: Trophy, label: 'Quiz Attempts', value: profile._count.quizResults, color: '#f59e0b' },
-                            { icon: Brain, label: 'Recommendations', value: profile._count.recommendations, color: '#8b5cf6' },
+                            { icon: Brain, label: 'Recommendations', value: profile._count.recommendations, color: '#EDEDED' },
                         ].map((stat, i) => {
                             const Icon = stat.icon
                             return (
@@ -99,7 +99,7 @@ export default function ProfilePage() {
             {/* Edit Profile */}
             <div className="card">
                 <h2 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                    <User size={18} className="text-indigo-400" /> Edit Profile
+                    <User size={18} className="text-zinc-300" /> Edit Profile
                 </h2>
 
                 {saved && (

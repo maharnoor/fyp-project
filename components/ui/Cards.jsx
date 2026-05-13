@@ -3,9 +3,9 @@ import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 
 export function StatCard({ icon: Icon, label, value, change, color = 'indigo', suffix = '' }) {
     const colorMap = {
-        indigo: { bg: 'rgba(99,102,241,0.1)', border: 'rgba(99,102,241,0.2)', icon: '#6366f1', text: '#a5b4fc' },
+        indigo: { bg: 'rgba(255, 255, 255,0.1)', border: 'rgba(255, 255, 255,0.2)', icon: '#FFFFFF', text: '#D4D4D8' },
         emerald: { bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.2)', icon: '#10b981', text: '#6ee7b7' },
-        violet: { bg: 'rgba(139,92,246,0.1)', border: 'rgba(139,92,246,0.2)', icon: '#8b5cf6', text: '#c4b5fd' },
+        violet: { bg: 'rgba(237, 237, 237,0.1)', border: 'rgba(237, 237, 237,0.2)', icon: '#EDEDED', text: '#c4b5fd' },
         amber: { bg: 'rgba(245,158,11,0.1)', border: 'rgba(245,158,11,0.2)', icon: '#f59e0b', text: '#fcd34d' },
         cyan: { bg: 'rgba(6,182,212,0.1)', border: 'rgba(6,182,212,0.2)', icon: '#06b6d4', text: '#67e8f9' },
         rose: { bg: 'rgba(244,63,94,0.1)', border: 'rgba(244,63,94,0.2)', icon: '#f43f5e', text: '#fda4af' },
@@ -33,7 +33,7 @@ export function StatCard({ icon: Icon, label, value, change, color = 'indigo', s
     )
 }
 
-export function ProgressCard({ label, value, max, color = '#6366f1' }) {
+export function ProgressCard({ label, value, max, color = '#FFFFFF' }) {
     const percentage = max > 0 ? Math.round((value / max) * 100) : 0
     return (
         <div className="flex items-center gap-4">
@@ -53,12 +53,12 @@ export function ProgressCard({ label, value, max, color = '#6366f1' }) {
 
 export function Badge({ children, color = 'indigo' }) {
     const colorMap = {
-        indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+        indigo: 'bg-zinc-800/50 text-zinc-300 border-zinc-700/20',
         emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
         amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
         rose: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
         cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-        violet: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
+        violet: 'bg-zinc-800/50 text-zinc-300 border-zinc-700/20',
         gray: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
     }
     return (
@@ -71,15 +71,15 @@ export function Badge({ children, color = 'indigo' }) {
 export function LoadingSpinner({ size = 'md' }) {
     const sizes = { sm: 'w-4 h-4', md: 'w-8 h-8', lg: 'w-12 h-12' }
     return (
-        <div className={`${sizes[size]} border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin`} />
+        <div className={`${sizes[size]} border-2 border-zinc-700/20 border-t-indigo-500 rounded-full animate-spin`} />
     )
 }
 
 export function EmptyState({ icon: Icon, title, description, action }) {
     return (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="p-5 rounded-2xl bg-indigo-500/10 mb-6">
-                <Icon size={40} className="text-indigo-400" />
+            <div className="p-5 rounded-2xl bg-zinc-800/50 mb-6">
+                <Icon size={40} className="text-zinc-300" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
             <p className="text-gray-400 mb-8 max-w-sm">{description}</p>
