@@ -5,20 +5,15 @@ import { Video, Plus, Trash2, Edit, X, Check } from 'lucide-react'
 import { LoadingSpinner } from '@/components/ui/Cards'
 import FieldIcon from '@/components/ui/FieldIcon'
 
-const DEMO_VIDEOS = [
-    { id: 'v1', title: 'Introduction to Computer Science Careers', category: 'cs', url: 'https://www.youtube.com/embed/SzJ46YA_RaA', description: 'Explore the world of software engineering, AI, and data science careers in Pakistan.', duration: 480 },
-    { id: 'v2', title: 'How to Become a Doctor in Pakistan', category: 'medical', url: 'https://www.youtube.com/embed/lK02m6dtrHQ', description: 'Complete guide to MBBS admission.', duration: 600 },
-    { id: 'v3', title: 'Engineering Career Paths in Pakistan', category: 'engineering', url: 'https://www.youtube.com/embed/uk-cykGFly4', description: 'Civil, Mechanical, Electrical engineering overview.', duration: 540 },
-]
 
-const CATEGORIES = ['cs', 'medical', 'engineering', 'business', 'arts']
+const CATEGORIES = ['cs', 'ai', 'medical', 'engineering', 'business', 'arts']
 
 export default function AdminVideosPage() {
     const { token } = useAuth()
-    const [videos, setVideos] = useState(DEMO_VIDEOS)
+    const [videos, setVideos] = useState([])
     const [loading, setLoading] = useState(false)
     const [showForm, setShowForm] = useState(false)
-    const [form, setForm] = useState({ title: '', description: '', category: 'cs', url: '', duration: '' })
+    const [form, setForm] = useState({ title: '', description: '', category: 'cs', url: '', duration: '', thumbnail: '' })
     const [saving, setSaving] = useState(false)
 
     useEffect(() => {
@@ -27,8 +22,10 @@ export default function AdminVideosPage() {
             try {
                 const res = await fetch('/api/videos', { headers: { Authorization: `Bearer ${token}` } })
                 const data = await res.json()
-                if (data.videos?.length > 0) setVideos(data.videos)
-            } catch { }
+                if (data.videos) setVideos(data.videos)
+            } catch (err) {
+                console.error('Failed to fetch videos:', err)
+            }
             finally { setLoading(false) }
         }
         if (token) fetchVideos()
@@ -47,7 +44,7 @@ export default function AdminVideosPage() {
             if (res.ok) {
                 setVideos(prev => [data.video, ...prev])
                 setShowForm(false)
-                setForm({ title: '', description: '', category: 'cs', url: '', duration: '' })
+                setForm({ title: '', description: '', category: 'cs', url: '', duration: '', thumbnail: '' })
             }
         } catch { }
         finally { setSaving(false) }
@@ -99,6 +96,10 @@ export default function AdminVideosPage() {
                         <div>
                             <label className="block text-sm text-gray-300 mb-2">YouTube Embed URL *</label>
                             <input className="input-field" required value={form.url} onChange={e => setForm(p => ({ ...p, url: e.target.value }))} placeholder="https://www.youtube.com/embed/..." />
+                        </div>
+                        <div>
+                            <label className="block text-sm text-gray-300 mb-2">Thumbnail URL (optional)</label>
+                            <input className="input-field" value={form.thumbnail} onChange={e => setForm(p => ({ ...p, thumbnail: e.target.value }))} placeholder="https://images.unsplash.com/..." />
                         </div>
                         <div>
                             <label className="block text-sm text-gray-300 mb-2">Description</label>
