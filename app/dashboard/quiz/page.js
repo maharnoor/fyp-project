@@ -672,7 +672,7 @@ const QUESTION_BANK = [
     },
 ]
 
-const QUESTIONS_PER_ATTEMPT = 10
+const QUESTIONS_PER_ATTEMPT = 5
 
 // Fisher-Yates shuffle (returns a new array, original untouched)
 function shuffle(arr) {
@@ -696,6 +696,7 @@ export default function QuizPage() {
     const [answers, setAnswers] = useState([])
     const [selectedOption, setSelectedOption] = useState(null)
     const [submitting, setSubmitting] = useState(false)
+    const [isAiLoading, setIsAiLoading] = useState(false)
     const [done, setDone] = useState(false)
     const [result, setResult] = useState(null)
 
@@ -732,6 +733,32 @@ export default function QuizPage() {
         if (current < questions.length - 1) {
             setCurrent(current + 1)
             setSelectedOption(null)
+        } else if (questions.length === QUESTIONS_PER_ATTEMPT) {
+            // End of Phase 1 - Hit AI API
+            setIsAiLoading(true)
+            try {
+                const res = await fetch('/api/quiz/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                    body: JSON.stringify({ answers: newAnswers }),
+                })
+                const data = await res.json()
+                if (res.ok && data.questions && data.questions.length > 0) {
+                    setQuestions([...questions, ...data.questions])
+                } else {
+                    // Fallback to static questions
+                    setQuestions([...questions, ...pickQuestions()])
+                }
+                setCurrent(current + 1)
+                setSelectedOption(null)
+            } catch (err) {
+                console.error(err)
+                setQuestions([...questions, ...pickQuestions()])
+                setCurrent(current + 1)
+                setSelectedOption(null)
+            } finally {
+                setIsAiLoading(false)
+            }
         } else {
             setSubmitting(true)
             try {
@@ -763,6 +790,19 @@ export default function QuizPage() {
         setSelectedOption(null)
         setDone(false)
         setResult(null)
+    }
+
+    if (isAiLoading) {
+        return (
+            <div className="max-w-2xl mx-auto py-24 text-center animate-fade-in">
+                <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-[#0a0a0a] border border-[#262626]">
+                    <Brain size={48} className="text-white animate-pulse" />
+                </div>
+                <h2 className="text-3xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>Analyzing your responses...</h2>
+                <p className="text-gray-400 text-lg mb-10">MindBot is generating personalized questions for you.</p>
+                <div className="w-10 h-10 mx-auto border-2 border-zinc-800 border-t-white rounded-full animate-spin" />
+            </div>
+        )
     }
 
     if (done && result) {
