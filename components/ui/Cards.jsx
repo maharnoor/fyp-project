@@ -71,7 +71,7 @@ export function Badge({ children, color = 'indigo' }) {
 export function LoadingSpinner({ size = 'md' }) {
     const sizes = { sm: 'w-4 h-4', md: 'w-8 h-8', lg: 'w-12 h-12' }
     return (
-        <div className={`${sizes[size]} border-2 border-zinc-700/20 border-t-indigo-500 rounded-full animate-spin`} />
+        <div className={`${sizes[size]} mx-auto border-2 border-zinc-800 border-t-white rounded-full animate-spin`} />
     )
 }
 
