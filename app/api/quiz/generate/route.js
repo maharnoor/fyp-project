@@ -82,10 +82,11 @@ Format strictly as:
         const rawContent = data.choices?.[0]?.message?.content || ''
 
         let jsonStr = rawContent.trim()
-        if (jsonStr.startsWith('```json')) {
-            jsonStr = jsonStr.replace(/^```json/, '').replace(/```$/, '').trim()
-        } else if (jsonStr.startsWith('```')) {
-            jsonStr = jsonStr.replace(/^```/, '').replace(/```$/, '').trim()
+        
+        // Use regex to extract the JSON array, ignoring any surrounding text the AI might add
+        const jsonMatch = jsonStr.match(/\[[\s\S]*\]/)
+        if (jsonMatch) {
+            jsonStr = jsonMatch[0]
         }
 
         const parsedQuestions = JSON.parse(jsonStr)

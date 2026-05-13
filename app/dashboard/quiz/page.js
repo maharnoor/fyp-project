@@ -30,7 +30,13 @@ export default function QuizPage() {
             if (res.ok && data.questions && data.questions.length > 0) {
                 setQuestions(prev => [...prev, data.questions[0]])
             } else {
-                console.error('Failed to load question from AI')
+                console.error('Failed to load question from AI, using fallback...')
+                setQuestions(prev => [...prev, {
+                    id: 'fallback_' + Date.now(),
+                    question: 'Which of these activities sounds most appealing to you?',
+                    options: ['Solving a complex logic puzzle', 'Helping someone who is feeling unwell', 'Managing a team project', 'Designing a beautiful poster'],
+                    fieldTags: ['cs', 'medical', 'business', 'arts']
+                }])
             }
         } catch (err) {
             console.error(err)
