@@ -15,7 +15,7 @@ export async function POST(request) {
         let SYSTEM_PROMPT = ''
         if (isFirstQuestion) {
             SYSTEM_PROMPT = `You are an AI career counselor for high-school students in Pakistan. 
-Generate exactly 1 random, broad multiple-choice question to begin assessing the student's career interests.
+Generate exactly 1 very basic, easy-to-understand, and broad multiple-choice question to begin assessing the student's general interests. Do not make it overly technical.
 The question MUST have exactly 4 options.
 Each option MUST be associated with one of these field tags: 'cs', 'medical', 'business', 'arts', 'engineering'. Ensure the field tag logically matches the option's nature.
 
